@@ -1,0 +1,22 @@
+[package]
+name = "transl"
+version = "0.1.0"
+entrypoint = "src/lib.typ"
+authors = ["Maycon F. Melo <@mayconfmelo>"]
+license = "MIT-0"
+description = "Easy and simple translations for words and expressions"
+categories = [ "layout", "book" ]
+# TODO: keywords
+keywords = [ "book", "document structuring" ]
+repository = "https://github.com/mayconfmelo/transl"
+exclude = [
+  "dev/",
+  "test/",
+  "docs/",
+  "scripts/",
+  ".git",
+  ".github",
+  ".gitignore",
+  "justfile",
+  "manual.typ"
+]

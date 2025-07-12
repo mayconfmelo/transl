@@ -1,0 +1,39 @@
+# NAME: transl example database
+
+# the language identifier mustnbe tyebsame used by Typst
+pt:
+  # Translation of "love"
+  love: amor
+  # Translation of "i love you, my dear!"
+  i love you, my dear!: Eu te amo, meu amor!
+  # Translation of a excerpt of a poem through 'poem' the identifier
+  poem: |
+    Amor é fogo que arde sem se ver,
+    é ferida que dói, e não se sente;
+    é um contentamento descontente,
+    é dor que desatina sem doer.
+
+
+es:
+  love: amor
+  i love you, my dear!: ¡Te amo mi amor!
+  poem: |
+    El amor es un fuego que arde sin ser visto,
+    es una herida que duele pero no se siente;
+    es una satisfacción descontenta,
+    es un dolor que enloquece sin doler.
+  
+  
+it:
+  love: amore
+  i love you, my dear!: Ti amo, amore mio!
+  poem: |
+    L'amore è un fuoco che arde senza essere visto,
+    è una ferita che fa male ma non si sente;
+    è un appagamento insoddisfatto,
+    è un dolore che ti fa impazzire senza ferire.
+  we'll share: divideremo
+  # Translation of the regex pattern "every .*? night" (show rules)
+  every .*? night: ogni giorno e ogni notte
+  know: sapere
+  love you: amarti
