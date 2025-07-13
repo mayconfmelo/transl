@@ -11,20 +11,15 @@
 
 
 // UTIL: Check if given value is of one of the types
-#let required-types(arg, ..types, test: false) = {
+#let type-check(arg, ..types, die: false) = {
+  let contxt = [#context()].func()
   let match = false
+
+  if types.pos().contains(type(arg)) {match = true}
+  else if type(arg) == content and arg.func() == contxt {match = true}
   
-  if type(arg) in types.pos() {
-    match = true
-  }
-  
-  if test == false {
-    if match == false {
-      panic("Invalid value type: " + type(arg))
-    }
-  }
-  else {
-    return match
+  if die == false {return match}
+  else if match == false {panic("Invalid value type: " + type(arg))}
   }
 }
 
@@ -45,9 +40,30 @@
   if add != none {
     this.update(curr => {
       if curr == none {curr = (:)}
+      let val = val
       
-      for entry in add.keys() {
-        curr.insert(entry, add.at(entry))
+      if add.contains(".") {
+        let p = str(add).split(".")
+        
+        if add.ends-with("+") {
+          p.last() = p.last().trim("+")
+          let arr = curr.at(p.at(0), default: (:)).at(p.at(1), default: ())
+          val = (..arr, val)
+        }
+        
+        // Insert curr.at(p0)
+        if curr.at(p.at(0), default: (:)) == (:) {
+          curr.insert(str(p.at(0)), (:))
+        }
+        curr.at(p.at(0)).insert(p.at(1), val)
+      }
+      else {
+        if add.ends-with("+") {
+          add = add.trim("+")
+          let arr = curr.at(add, default: ())
+          val = (..arr, val)
+        }
+        curr.insert(str(add), val)
       }
       curr
     })
