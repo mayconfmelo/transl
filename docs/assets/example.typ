@@ -6,7 +6,7 @@
 
 = Translator Example
 
-This document is a practical example of how `transl` works. If you are seeing
+This document is a practical example of how _transl_ works. If you are seeing
 the final PDF result, please refer to the `docs/assets/example.typ` source file
 to understand it better.
 
@@ -98,9 +98,6 @@ Reveive the translation string instead of a `context()` element:
 #context{
   let translation = transl("love", mode: str)
 
-  translation + ": "
-  repr(type(translation))
+  // This would be impossible if transl returned a context()
+  raw(translation)
 }
-
-
-

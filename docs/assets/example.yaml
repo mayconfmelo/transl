@@ -1,7 +1,8 @@
 # NAME: transl example database
 
-# the language identifier mustnbe tyebsame used by Typst
-pt:
+default: "en"  # Default language to fallback of tue one selectednis not found
+
+pt:   # the language identifier must be the same used by Typst
   # Translation of "love"
   love: amor
   # Translation of "i love you, my dear!"
