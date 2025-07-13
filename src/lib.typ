@@ -1,5 +1,7 @@
 // NAME: Translator
+// FIXME: utils.db()
 // TODO: Support for Fluent
+// TODO: Add example.ftl file in docs/
 // TODO: Support for regex when showing == false (?)
 
 /**
@@ -66,13 +68,13 @@
   let body = if showing {expr.pop()} else {none}
   
   // Insert data into the translation database
-  if data != none {utils.db(add: data)}
+  if data != none {utils.db(add: "lang", data)}
   
   // Exits the function if given no expression
   if expr == () {return}
   
   
-  let translation() = {
+  let get-data() = {
     let data = utils.db().get()
     let default = data.at("default", default: "en")
     let to = if to == auto {text.lang} else {to}
@@ -80,16 +82,16 @@
     let expr = expr
     
     // If target language is available in database
-    if to in data.keys() {
-      let available = data.at(to)
+    if to in data.at("lang").keys() {
+      let available = data.at("lang").at(to)
       
       // Translate entries available when no expression given
-      if showing and expr.len() == 1 { expr = data.at(to).keys() }
+      if showing and expr.len() == 1 { expr = data.at("lang").at(to).keys() }
       
-      for expression in expr {
-        let result = available.at(expression, default: none)
+      for e in expr {
+        let result = available.at(e, default: none)
         
-        if result == none {panic("Translation not found: " + repr(expression))}
+        if result == none {panic("Translation not found: " + repr(e))}
         
         results.push(result)
       }
@@ -98,30 +100,27 @@
     else if from == to {results = expr}
     else {panic("Target language not found: " + repr(to))}
     
-    // Use all entries available if no expression is given
-    
     return (expr, results)
   }
   
   // When using #show: transl or else #transl
   if showing {
     context {
-      let (expr, translation) = translation()
+      let (expr, translated) = get-data()
       let body = body
       
-      for r in range(translation.len()) {
-        let expression = "\b(?i)" + expr.at(r) + "\b"
+      for r in range(translated.len()) {
+        let re = "(?i)" + expr.at(r)
         
         body = {
           // Substitute the text of each
-          show regex(expression): it => context {
-            let result = translation.at(r)
+          show regex(re): it => context {
+            let result = translated.at(r)
             
             if it.text.first() != upper(it.text.first()) {result}
             else if it.text != result {upper(result.first()) + result.slice(1)}
             else if it != upper(it) {upper(result)}
           }
-          
           body
         }
       }
@@ -129,8 +128,10 @@
     }
   }
   else {
-    if mode == str {translation().at(1).join(" ")}
-    else if mode.func() == [#context()].func() {context translation().at(1).join(" ")}
+    let contxt = [#context()]
+    
+    if mode == str {get-data().at(1).join(" ")}
+    else if mode.func() == contxt.func() {context get-data().at(1).join(" ")}
     else {panic("Invalid mode " + repr(mode))}
   }
 }
