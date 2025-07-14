@@ -1,106 +1,48 @@
-# Minimal Books
+# Translator
 
 <center>
-  Simple and complete books without introducing new syntax
+  Easy and simple translations for words and expressions, with support for localization
 </center>
 
 
 ## Quick Start
 
-```typst
-#import "@preview/min-book:1.1.0": book
-#show: book.with(
-  title: "Book Title",
-  subtitle: "Book subtitle, not more than two lines long",
-  authors: "Book Author",
-)
-```
+```typ
+#import "@preview/transl:0.1.0": transl
+#transl(data: yaml("lang.yaml"))
 
+// Get "I love you" in Spanish:
+#set text(lang: "es")
+#transl("I love you")
+
+// Translate every "love" to Italian:
+#set text(lang: "it")
+#show: doc => transl("love", doc)
+```
 
 ## Description
 
-Generate complete and complex books, without any annoying new commands or
-syntax, just good old pure Typst. This package manipulates the standard Typst
-elements as much as possible, adapting them to the needs of a book structure
-in a way that there's no need to learn a whole new semantic just because of
-_min-book_.
+Get comprehensive and contextual translations, with support for regular
+expressions and [Fluent](https://projectfluent.org/) localization. This package
+have one main command, `#transl`, that receives one or more expression strings,
+searches for each of them in its database and then returns the translation for
+each one.
 
-For some fancy book features there is no existing compatible Typst element to
-re-work and adapt; in those cases, this package do provide additional commands
-that are completely optional, for the sake of completeness.
+The expressions are the text to be translated, they can be simple words or longer
+text excerpts, or can be also used as identifiers to obtain longer text blocks at
+once. Regular expression patterns are supported when _transl_ is used in `#show`
+rules.
 
-This package comes with some thoughful ready-to-use defaults but also allows
-you to play with highly customizable options if you need them, so it's really
-up to you: customize it your way or ride along the defaults — both ways are
-possible and encouraged.
 
 ## More Information
 
-- [Official manual](https://raw.githubusercontent.com/mayconfmelo/min-book/refs/tags/1.1.0/docs/manual.pdf)
-- [Example PDF result](https://raw.githubusercontent.com/mayconfmelo/min-book/refs/tags/1.1.0/docs/example.pdf)
-- [Example Typst code](https://github.com/mayconfmelo/min-book/blob/1.1.0/template/main.typ)
-- [Changelog](https://github.com/mayconfmelo/min-book/blob/main/changelog.md)
-- [Development setup](https://github.com/mayconfmelo/min-book/blob/main/docs/setup.md)
+- [Official manual](https://raw.githubusercontent.com/mayconfmelo/transl/refs/tags/1.1.0/docs/manual.pdf)
+- [Example PDF result](https://raw.githubusercontent.com/mayconfmelo/transl/refs/tags/1.1.0/docs/example.pdf)
+- [Example Typst code](https://github.com/mayconfmelo/transl/blob/1.1.0/template/main.typ)
+- [Changelog](https://github.com/mayconfmelo/transl/blob/main/changelog.md)
+- [Development setup](https://github.com/mayconfmelo/transl/blob/main/docs/setup.md)
 
 
-## Default Fonts
-
-<table>
-  <tr>
-    <td>Text:</td>
-    <td>Book Antiqua, or<br/>Times New Roman</td>
-  </tr>
-  <tr>
-    <td>Math:</td>
-    <td><a href="https://mirrors.ctan.org/fonts/Asana-Math/Asana-Math.otf">
-      Asana Math
-    </a></td>
-  </tr>
-  <tr>
-    <td>Mono:</td>
-    <td><a href="https://fonts.google.com/specimen/Inconsolata">
-      Inconsolata
-    </a></td>
-  </tr>
-  <tr>
-    <td>Cover title:</td>
-    <td><a href="https://fonts.google.com/specimen/Cinzel">Cinzel</a></td>
-  </tr>
-  <tr>
-    <td>Cover text:</td>
-    <td><a href="https://fonts.google.com/specimen/Alice">Alice</a></td>
-  </tr>
-</table>
-
-
-## Feature List
-
-- Cover
-  - Automatic generation
-  - Creation using Typst
-  - Existing image
-- Title page
-  - Automatic generation
-  - Creation using Typst
-- Cataloging in Publication
-- Errata
-- Dedication
-- Acknowledgments
-- Epigraph
-- Table of contents
-- Multi-language support
-- Advanced customization options
-- Accessible default fonts
-- Book parts (headings)
-- Book chapters (headings)
-- End Notes
-- Horizontal Rule
-- Block Quote
-- Appendices ambient
-- Annexes ambient
-
-
-> [!TIP]
-> Currently, Typst — and therefore _min-book_ — does not have native ePub support.
-> However, it’s possible to generate both an ePub file and a _min-book_ PDF from
-> the same source (Pandoc) using [**`bookmkr`**](https://www.github.com/mayconfmelo/bookmkr/).
+> [!NOTE]
+> The Fluent support is a fork of a [linguify](https://github.com/typst-community/linguify/)
+> feature, and all the overall project concept is heavily inspired in this great package.

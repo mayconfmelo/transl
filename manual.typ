@@ -12,12 +12,13 @@
   from-comments: read("src/lib.typ")
 )
 
+= Use Cases
 
-= Translation Database
+== Standard Translation Database
 
 ```typ
 #import "@preview/transl:0.1.0": transl
-#transl(data: yaml("example.yaml"))
+#transl(data: yaml("lang.yaml"))
 ```
 
 Before any proper translation, is required to insert some translation data
@@ -28,7 +29,34 @@ the `docs/assets/example.yaml` file to learn more about the structure of a
 translation database.
 
 
-= Get Translation
+== Fluent Translation Database
+
+```typ
+#import "@preview/transl:0.1.0": transl, fluent
+#transl(
+  data: eval( fluent(data: "path", lang: ("pt", "es")) )
+)
+```
+
+To enable the support for Fluent localization, is necessary to set the database
+using `#fluent`, that resolves the paths to all the `flt` files and reads them.
+In the code above, the files `path/pt.ftl` and `path/es.ftl` will be added to the
+translation database. Because of some Typst limitations on `#read`, it is
+required to wrap it inside an `#eval` command for now.
+
+After set to Fluent, every _transl_ command from now on will use it as
+localization mechanism, to go back to the standard localization mechanism, use:
+
+```typ
+#import "@preview/transl:0.1.0": transl, std
+#transl( data: std(yaml("lang.yaml")) )
+```
+
+The YAML database can be ommited if there os already a standard translation
+database registerd.
+
+
+== Get Translation
 
 ```typ
 #import "@preview/transl:0.1.0": transl
@@ -47,7 +75,7 @@ returned together, separated by space.
 #transl("expression", from: "en")
 ```
 
-Defines the language of the expression used to get the translation. This is an
+Defines the initial language of the expression, before translation. This is an
 optional feature used to get tye expression itself as translation when
 `#transl(from) == #text.lang`. The expression can be a single word or an text
 excerpt.
@@ -65,7 +93,7 @@ This is an optional feature that fallback to the current `#text.lang` when no
 set.
 
 
-== Using Show Rule
+== Using Show Rules
 
 ```typ
 #import "@preview/transl:0.1.0": transl
@@ -82,7 +110,7 @@ database must be idenficied by the regex pattern instead of the text that would
 match it — see the `docs/assets/example.yaml` for more information.
 
 
-== Get String Instead of Context
+== Get Contextual String
 
 ```typ
 #import "@preview/transl:0.1.0": transl
@@ -92,12 +120,21 @@ match it — see the `docs/assets/example.yaml` for more information.
 This allows to manage and tweak the translated string received from _transl_
 without the barrier of `context()`, but to use it is required to wrap all the
 code that modifies the translated string in a `context` block. This is useful
-for package mantainers that need to use the translated value in an element that
-only allows `string` arguments, like `#raw()` or `#link()`.
+for package mantainers that need to manipulate or to use the translated value in
+elements that only allows `string` arguments, like `#raw()`.
 
-by default, the value received is of `context` type because of using `#text.lang`
-and other contextual features, this type is a shadowed `content` in which the
-translated text cannot be accessed.
+
+== Context-Free Translations
+
+```typ
+#import "@preview/transl:0.1.0": transl
+#transl("expression", to: "pt", data: yaml("lang.yaml"))
+```
+
+To completely get rid of all `context()` is required to set
+`#transl(..expr, to, data)` in tue same command, this way all needed information
+is available at once and nothing needs to be contextually retrieved. This returns
+a simple `string` without the need of any additional `context` blocks.
 
 
 = Copyright
@@ -108,3 +145,6 @@ The manual source code is free software: you are free to change and redistribute
 it.  There is NO WARRANTY, to the extent permitted by law.
 
 The logo was obtained from #link("https://flaticon.com")[Flaticon] website.
+
+The Fluent support is a fork of a #univ("linguify") feature, and all the overall
+project concept is heavily inspired in this great package.
