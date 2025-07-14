@@ -4,10 +4,9 @@ version = "0.1.0"
 entrypoint = "src/lib.typ"
 authors = ["Maycon F. Melo <@mayconfmelo>"]
 license = "MIT-0"
-description = "Easy and simple translations for words and expressions"
+description = "Easy and simple translations for words and expressions, with support for localization"
 categories = [ "layout", "book" ]
-# TODO: keywords
-keywords = [ "book", "document structuring" ]
+keywords = [ "translation", "translator", "localization", "i18n", "i10n", "l10n", "fluent" ]
 repository = "https://github.com/mayconfmelo/transl"
 exclude = [
   "dev/",

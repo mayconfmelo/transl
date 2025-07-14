@@ -21,7 +21,7 @@ install-all:
 pdf:
   mkdir "dev" 2>/dev/null || true
   bash scripts/package.sh check "" "{{root}}"
-  typst c "docs/assets/example.typ" "dev/example.pdf"
+  typst c "docs/example/main.typ" "dev/example.pdf"
   typst c "manual.typ" "dev/manual.pdf"
 
 # Generate documentation as PNGs in dev/png/
@@ -29,7 +29,7 @@ png:
   rm -r "dev/png" 2>/dev/null || true
   mkdir -p "dev/png" 2>/dev/null || true
   bash scripts/package.sh check "" "{{root}}"
-  typst c "docs/assets/example.typ" "dev/png/example-{0p}.png"
+  typst c "docs/example/main.typ" "dev/png/example-{0p}.png"
   typst c "manual.typ" "dev/png/manual-{0p}.png"
   
 # Toggle symlink this project to "local" namespace under 0.0.0 version.
@@ -42,14 +42,9 @@ version v:
   cp dev/*.pdf docs/
   bash scripts/version.sh "{{v}}" "{{root}}"
 
-# Init Typst template project in dev/
-init target="preview":
-  bash scripts/init.sh "{{target}}" "{{root}}"
-  
 [private]
 all:
   @just install-all
-  @just init
   @just install "pkg"
   @just pdf
   cp dev/*.pdf docs/
