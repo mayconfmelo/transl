@@ -1,8 +1,9 @@
 // NAME: transl example usage
 
-#import "@preview/transl:0.1.0": transl
+#import "@preview/transl:0.1.0": transl, show-db
 
 #set text(font: "Arial", size: 12pt)
+
 
 = Translator Example
 
@@ -11,7 +12,8 @@ the final PDF result, please refer to the `docs/assets/example.typ` source file
 to understand it better.
 
 // Set database example.yaml
-#transl(data: yaml("example.yaml"))
+#transl(data: yaml("langs.yaml"))
+
 
 == Translating words
 
@@ -27,6 +29,7 @@ Love in French: #transl("amour", from: "fr").
 
 Love in Italian: #transl("love", to: "it").
 
+
 == Translating expressions
 
 #set text(lang: "pt")
@@ -40,6 +43,7 @@ In Spanish we say: #transl("i love you, my dear!")
 In French we say: #transl("je t'aime mon amour!", from: "fr")
 
 In Italian we say: #transl("i love you, my dear!", to: "it")
+
 
 == Translating whole sections
 
@@ -60,6 +64,7 @@ c'est une douleur qui rend fou sans faire mal."
 
 #transl("poem", to: "it")
 
+
 == Translating across the content
 
 #set text(lang: "it")
@@ -69,7 +74,6 @@ c'est une douleur qui rend fou sans faire mal."
   doc
 )
 
-// In final result, so
 I wanna love you \
 And treat you right \
 I wanna love you \
@@ -90,14 +94,41 @@ I got to know, got to know, got to know now\
 I-I-I-I-I-I-I-I-I, I'm willing and able\
 So I throw my cards on your table\
 
-= Translating with tweaks
 
-Reveive the translation string instead of a `context()` element:
+== Translating and tweaking
 
 #set text(lang: "pt")
 #context{
   let translation = transl("love", mode: str)
-
-  // This would be impossible if transl returned a context()
-  raw(translation)
+  
+  translation = upper(translation.first()) + translation.slice(1)
+  let color = red
+  for letter in translation {
+    text(fill: color, letter)
+    color = if color == red {rgb(252, 169, 227)} else {red}
+  }
 }
+
+
+== Translating context-free
+
+// Command must have #transl(..expr, to, data)
+#transl("love", to: "it", data: yaml("langs.yaml"))
+
+
+== Translating with localization using Fluent
+
+#import "@preview/transl:0.1.0": fluent
+
+// Using last #set text(lang) as #transl(to)
+#transl(
+  "declaration",
+  data: eval(fluent("ftl/", lang: "pt")),
+  args: (tense: "past")
+)
+
+#transl("declaration")
+
+#transl("declaration", args: (tense: "future"))
+
+#context show-db()
