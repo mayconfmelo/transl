@@ -3,11 +3,9 @@
 default: "en"  # Default language to fallback of tue one selectednis not found
 
 pt:   # the language identifier must be the same used by Typst
-  # Translation of "love"
-  love: amor
-  # Translation of "i love you, my dear!"
-  i love you, my dear!: Eu te amo, meu amor!
-  # Translation of a excerpt of a poem through 'poem' the identifier
+  love: amor   # Translation of "love"
+  i love you, my dear!: Eu te amo, meu amor!   # Translation of "i love you, my dear!"
+  # Translation of a poem excerpt
   poem: |
     Amor é fogo que arde sem se ver,
     é ferida que dói, e não se sente;
@@ -35,6 +33,6 @@ it:
     è un dolore che ti fa impazzire senza ferire.
   we'll share: divideremo
   # Translation of the regex pattern "every .*? night" (show rules)
-  every .*? night: ogni giorno e ogni notte
+  every day and every night: ogni giorno e ogni notte
   know: sapere
   love you: amarti

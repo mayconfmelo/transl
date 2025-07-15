@@ -1,8 +1,12 @@
 // NAME: transl example usage
 
-#import "@preview/transl:0.1.0": transl, show-db
+#import "@preview/transl:0.1.0": transl
 
 #set text(font: "Arial", size: 12pt)
+
+// DEBUG: Show final translation database structure
+#import "@preview/transl:0.1.0": show-db
+#context show-db("final")
 
 
 = Translator Example
@@ -69,8 +73,7 @@ c'est une douleur qui rend fou sans faire mal."
 
 #set text(lang: "it")
 #show: doc => transl(
-  "love you", "love", "we'll share",
-  "every .*? night", "know",
+  "every .*? night", "know", "love you", "love", "we'll share",
   doc
 )
 
@@ -120,15 +123,19 @@ So I throw my cards on your table\
 
 #import "@preview/transl:0.1.0": fluent
 
-// Using last #set text(lang) as #transl(to)
+// Set normalization for a single language and get the "declaration" expression
 #transl(
   "declaration",
-  data: eval(fluent("ftl/", lang: "pt")),
+  data: fluent("file!" + read("ftl/pt.ftl"), lang: "pt"),
+  args: (tense: "past")
+)
+
+// Set normalization for more than one language
+#transl(
+  data: eval( fluent("ftl/", lang: ("pt", "en")) ),
   args: (tense: "past")
 )
 
 #transl("declaration")
 
 #transl("declaration", args: (tense: "future"))
-
-#context show-db()
