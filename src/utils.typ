@@ -32,7 +32,7 @@
   upd: none,
   ..val
 ) = {
-  let state-name = "transl-configuration-storage"
+  let state-name = "transl-translation-database"
   let this = state(state-name)
   let val = val.pos().at(0, default: none)
   
@@ -64,7 +64,7 @@
 }
 
 
-// UTIL: Manages Fluid I10n data (see USAGE)
+// UTIL: Manages Fluid L10n data (see USAGE)
 #let fluent-data(
   get: none,
   lang: none,
@@ -84,12 +84,14 @@
 
 
 // DEBUG: Get the translation database at this point
-#let show-db() = {
+#let show-db(..mode) = {
   import "utils.typ": db
+  
+  let data = if mode.pos() != () {db().final()} else {db().get()}
   
   set page(height: auto)
   raw(
     lang: "yaml",
-    yaml.encode(db().get())
+    yaml.encode(data)
   )
 }

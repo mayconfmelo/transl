@@ -1,5 +1,4 @@
 // NAME: Translator
-// IDEA: Support for regex also when showing == false
 
 #import "utils.typ": show-db
 
@@ -29,8 +28,8 @@
  * 
  * The expressions are the text to be translated, they can be simple words or
  * longer text excerpts, or can be used as identifiers to obtain longer text
- * blocks at once. Regular expression patterns are supported when _transl_ is
- * used in `show` rules.
+ * blocks at once. Regular expressions are supported as string patterns — not
+ * `#regex` elements.
  * 
  * All the conceptual structure of _transl_ and its idea is heavily inspired on
  * the great #univ("linguify") package.
@@ -39,7 +38,7 @@
  * 
  * = Options
  * 
- * These are all the options and its defaults used by _min-book_:
+ * These are all the options and its defaults used:
  * 
  * :transl:
 **/
@@ -55,8 +54,8 @@
    * Translation file — see the `docs/assets/example.yaml` file.**/
   mode: context(),
   /** <- type
-   * Type of value returned by _transl_: a `context()` or a `str` —
-   * the latter requires `#context transl(mode: string)`. **/
+   * Type of value returned: an opaque `context()` or a contextualized `str`
+   * — used as `#context transl(mode: str)`. **/
   args: (:),
   /** <- dictionary
     * Fluent arguments used to customize the translation output. **/
@@ -69,7 +68,7 @@
   if expr.named() != (:) {panic("unexpected argument: " + repr(expr.named()))}
   
   let expr = expr.pos()
-  let i18n = "std"
+  let l10n = "std"
   let showing = if expr != () and type(expr.last()) == content {true} else {false}
   let body = if showing {expr.pop()} else {none}
   
@@ -77,27 +76,21 @@
     if to != auto {mode = str}
     
     // Manage output of #fluent()
-    i18n = data.at("i18n", default: "std")
+    l10n = data.at("l10n", default: "std")
     data = data.at("files", default: data)
     
     if not showing {
       // Insert data into the translation database
-      if data != (:) {utils.db(add: i18n, data)}
-      if mode != str {utils.db(add: "i18n", i18n)}
+      if data != (:) {utils.db(add: l10n, data)}
+      if mode != str {utils.db(add: "l10n", l10n)}
     }
     
     // Allows context-free use
     let curr-data = data
     data = (:)
-    data.insert(i18n, curr-data)
+    data.insert(l10n, curr-data)
     
   }
-  
-  // Change localization mechanism in the translation database
-  // if i18n != data.at("i18n", default: "std") and not showing and mode != str {
-  //   i18n = data.at("i18n", default: i18n)
-  //   utils.db(add: "i18n", i18n)
-  // }
   
   // Exits if given no expression
   if expr == () {return}
@@ -106,34 +99,46 @@
   // Get translations
   let get-data() = {
     let data = if data == none {utils.db().get()} else {data}
-    let i18n = data.at("i18n", default: i18n)
-    let default = data.at(i18n).at("default", default: "en")
+    let l10n = data.at("l10n", default: l10n)
+    let default = data.at(l10n).at("default", default: "en")
     let to = if to == auto {text.lang} else {to}
     let result = ()
     let expr = expr
     
     // If target language is available in database
-    if data.at(i18n).keys().contains(to) {
+    if data.at(l10n).keys().contains(to) {
       // Resolve localization mechanism (feeds result array)
-      if i18n == "std" {
-        let available = data.at(i18n).at(to)
+      if l10n == "std" {
+        let available = data.at(l10n).at(to)
         
         // Translate all entries available when no expression given in show rule
-        if showing and expr.len() == 1 { expr = data.at(i18n).at(to).keys() }
+        if showing and expr.len() == 1 { expr = data.at(l10n).at(to).keys() }
         
-        for e in expr {
-          let res = available.at(e, default: none)
+        for i in range(expr.len()) {
+          // if expr.at(i).starts-with("regex!") {
+          //   expr.at(0) = available.keys().find(key => key.contains(re))
+          // }
           
-          if res == none {panic("Translation not found: " + repr(e))}
+          // Try to use expression as string, otherwise use it as regex pattern
+          let res = available.at(
+            expr.at(i),
+            default: {
+              let re = regex("(?i)" + expr.at(i))
+              let key = available.keys().find(key => key.contains(re))
+              available.at(key)
+            }
+          )
+          if res == none {panic("Translation not found: " + repr(expr.at(i)))}
+          
           result.push(res)
         }
       }
-      else if i18n == "ftl" {
+      else if l10n == "ftl" {
         for e in expr {
           let res = utils.fluent-data(
             get: e,
             lang: to,
-            data: data.at(i18n),
+            data: data.at(l10n),
             args: args
           )
           
@@ -155,13 +160,13 @@
       let (expr, translated) = get-data()
       let body = body
       
-      for r in range(translated.len()) {
-        let re = "(?i)" + expr.at(r)
+      for i in range(translated.len()) {
+        let re = regex("(?i)" + expr.at(i))
         
         body = {
-          // Substitute the text of each
-          show regex(re): it => context {
-            let result = translated.at(r)
+          // Substitute the expression every time across the content
+          show re: it => context {
+            let result = translated.at(i)
             
             if it.text.first() != upper(it.text.first()) {result}
             else if it.text != result {upper(result.first()) + result.slice(1)}
@@ -179,7 +184,7 @@
     
     if mode == str {get-data().at(1).join(" ")}
     else if mode.func() == contxt.func() {context get-data().at(1).join(" ")}
-    else {panic("Invalid mode " + repr(mode))}
+    else {panic("Invalid mode: " + repr(mode))}
   }
 }
 
@@ -190,47 +195,63 @@
  * 
  * :fluent:
  * 
- * Fluent is a localization solution (i10n) developed by Mozilla that can easily
+ * Fluent is a localization solution (L10n) developed by Mozilla that can easily
  * solve those wild language-specific variations that are tricky to fix in code,
  * like gramatical case, gender, number, tense, aspect, or mood. When used to
  * set `#transl(data)`, this function signalizes _transl_ to use its embed
- * Fluent plugin instead of the standard mechanism (YAML). It needs to
- * be wrapped in an `eval` to work properly.
+ * Fluent plugin instead of the standard mechanism (YAML). It may need to
+ * be wrapped in an `#eval` to work properly.
 **/
 #let fluent(
-  path,
+  data,
   /** <- string
-    * The path where the `ftl` files are stored in the project. **/
+    * The path to where the `ftl` files are stored in the project (requires
+    * `#eval`) or `"file!"` followed by the Fluent code itself (does not
+    * require `#eval`). **/
   lang: (),
   /** <- array | string
-    * The languages used — each corresponds to _lang.ftl_ inside the `path`. **/
+    * The languages used — each corresponds to _lang.ftl_ inside the given path. **/
   args: (:)
   /** <- dictionary | none
     * Additional arguments passed to Fluent. **/
 ) = {
+  // Normalizes lang as array
+  if type(lang) != array {lang = (lang,)}
+  if type(lang) == () {panic("Missing #transl(lang) argument")}
+  
+  let scope = (
+    DATA: repr(data),
+    LANGS: repr(lang),
+    IS-FILE: repr(data.starts-with("file!"))
+  )
+  
+  // Code to be evaluated
   let code = ```typst
-    let langs = LANGS
-    let data = (
-      i18n: "ftl",
+    let result = (
+      l10n: "ftl",
       files: (:),
     )
     
-    for lang in langs {
-      data.files.insert(lang, str(read(PATH + "/" + lang + ".ftl")))
+    if not IS-FILE {
+      for lang in LANGS {
+        result.files.insert(lang, str(read(DATA + "/" + lang + ".ftl")))
+      }
+    }
+    else {
+      result.files.insert(LANGS.at(0), str(DATA).slice(5))
     }
     
-    data
+    result
   ```.text
   
-  if type(lang) != array {lang = (lang,)}
-  if type(lang) == () {panic("Missing #transl(lang) argument")}
-
-  let scope = (
-    PATH: repr(path),
-    LANGS: repr(lang),
+  // Replace the PLACEHOLDERs by their respective values
+  code = code.replace(
+    regex("\b(" + scope.keys().join("|") + ")\b"),
+    m => scope.at(m.text)
   )
-
-  code.replace(regex("\b(" + scope.keys().join("|") + ")\b"), m => scope.at(m.text))
+  
+  // Eval if data is "file!" string, or return code to be evaluated
+  if data.starts-with("file!") {eval(code)} else {code}
 }
 
 /** 
@@ -244,9 +265,9 @@
   data: (:)
 ) = {
   (
-    i18n: "std",
+    l10n: "std",
     files: (:),
   )
 }
 
-/// The `#std` command does not need to be wrapped in an `eval`.
+/// The `#std` command does not need to be wrapped in an `#eval`.
