@@ -119,13 +119,14 @@
           //   expr.at(0) = available.keys().find(key => key.contains(re))
           // }
           
-          // Try to use expression as string, otherwise use it as regex pattern
+          // Try to use expression as string, then try to use it as regex pattern
           let res = available.at(
             expr.at(i),
             default: {
               let re = regex("(?i)" + expr.at(i))
               let key = available.keys().find(key => key.contains(re))
-              available.at(key)
+    
+              if key != none {available.at(key)} else {key}
             }
           )
           if res == none {panic("Translation not found: " + repr(expr.at(i)))}
