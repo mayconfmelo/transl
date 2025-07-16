@@ -1,6 +1,6 @@
 // NAME: transl example usage
 
-#import "@preview/transl:0.1.0": transl
+#import "@preview/transl:0.1.0": transl, fluent, std
 
 #set text(font: "Arial", size: 12pt)
 
@@ -88,6 +88,13 @@ Of my single bed \
 We'll share the same room, yeah \
 For Jah provide the bread \
 
+#transl(data: fluent("file!" + read("ftl/pt.ftl"), lang: "pt") )
+
+// Get "cards" on Fluent database (Portuguese)
+// Get the expression equivalent to "cards" in standard database (English)
+// Translate all ocurrencies of the English expression to the Fluent Portuguese
+#show: doc => transl("cards", from: "en", to: "pt", doc)
+
 Is this love? Is this love? Is this love?\
 Is this love that I'm feeling?\
 Is this love? Is this love? Is this love?\
@@ -96,6 +103,9 @@ I wanna know, wanna know, wanna know now\
 I got to know, got to know, got to know now\
 I-I-I-I-I-I-I-I-I, I'm willing and able\
 So I throw my cards on your table\
+
+// Set l10n back to "std"
+#transl(data: std())
 
 
 == Translating and tweaking
@@ -119,7 +129,7 @@ So I throw my cards on your table\
 #transl("love", to: "it", data: yaml("langs.yaml"))
 
 
-== Translating with localization using Fluent
+== Translating with localization by Fluent
 
 #import "@preview/transl:0.1.0": fluent
 
