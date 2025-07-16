@@ -1,9 +1,12 @@
 # Translator
 
 <center>
-  Easy and simple translations for words and expressions, with support for localization
-</center>
 
+  Easy and simple translations for words and expressions, with support for localization
+
+  [![Tests](https://github.com/mayconfmelo/transl/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/mayconfmelo/transl/actions/workflows/tests.yml)
+
+</center>
 
 ## Quick Start
 
@@ -42,7 +45,7 @@ rules.
 - [Changelog](https://github.com/mayconfmelo/transl/blob/main/changelog.md)
 - [Development setup](https://github.com/mayconfmelo/transl/blob/main/docs/setup.md)
 
+---------------
 
-> [!NOTE]
-> The Fluent support is a fork of a [linguify](https://github.com/typst-community/linguify/)
-> feature, and all the overall project concept is heavily inspired in this great package.
+The Fluent support is a fork of a [linguify](https://github.com/typst-community/linguify/)
+feature, and all the overall project concept is heavily inspired in this great package.
