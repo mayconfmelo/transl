@@ -65,6 +65,12 @@ new version:
   bash scripts/version.sh "{{version}}" "{{root}}"
   @just packages
   
+# just build locally (used in CI).
+[private]
+build:
+  @just install preview
+  @just example
+  
 # deploy to the Typst Universe repo in ../packages.
 [private]
 deploy:
