@@ -43,7 +43,7 @@
  * :transl:
 **/
 #let transl(
-  from: none,
+  from: auto,
   /** <- string
    * Initial origin language.**/
   to: auto,
@@ -89,11 +89,10 @@
     let curr-data = data
     data = (:)
     data.insert(l10n, curr-data)
-    
   }
   
   // Exits if given no expression
-  if expr == () {return}
+  if expr == () and not showing {return}
   
   
   // Get translations
@@ -112,7 +111,7 @@
         let available = data.at(l10n).at(to)
         
         // Translate all entries available when no expression given in show rule
-        if showing and expr.len() == 1 { expr = data.at(l10n).at(to).keys() }
+        if showing and expr.len() == 0 { expr = data.at(l10n).at(to).keys() }
         
         for i in range(expr.len()) {
           // if expr.at(i).starts-with("regex!") {
@@ -135,15 +134,22 @@
         }
       }
       else if l10n == "ftl" {
-        for e in expr {
+        for i in range(expr.len()) {
           let res = utils.fluent-data(
-            get: e,
+            get: expr.at(i),
             lang: to,
             data: data.at(l10n),
             args: args
           )
           
-          if res == none {panic("Translation not found: " + repr(e))}
+          if res == none {panic("Translation not found: " + repr(expr.at(i)))}
+          if l10n == "ftl" and from != auto and showing {
+            expr.at(i) = data
+              .at("std")
+              .at(from)
+              .at(expr.at(i), default: expr.at(i))
+          }
+          
           result.push(res)
         }
       }
@@ -166,7 +172,7 @@
         
         body = {
           // Substitute the expression every time across the content
-          show re: it => context {
+          show re: it => {
             let result = translated.at(i)
             
             if it.text.first() != upper(it.text.first()) {result}
