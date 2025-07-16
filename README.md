@@ -4,8 +4,7 @@
 
   Easy and simple translations for words and expressions, with support for localization
 
-  [![Tests](https://github.com/mayconfmelo/transl/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/mayconfmelo/transl/actions/workflows/tests.yml)
-
+  [![Tests](https://github.com/mayconfmelo/transl/actions/workflows/tests.yml/badge.svg)](https://github.com/mayconfmelo/transl/actions/workflows/tests.yml)
   [![Build](https://github.com/mayconfmelo/transl/actions/workflows/build.yml/badge.svg)](https://github.com/mayconfmelo/transl/actions/workflows/build.yml)
 
 </center>
