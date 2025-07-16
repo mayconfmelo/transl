@@ -210,11 +210,10 @@
  * be wrapped in an `#eval` to work properly.
 **/
 #let fluent(
-  data,
+  ..data,
   /** <- string
-    * The path to where the `ftl` files are stored in the project (requires
-    * `#eval`) or `"file!"` followed by the Fluent code itself (does not
-    * require `#eval`). **/
+    * Path to where the `ftl` files are stored in the project (requires `#eval`)
+    * or `"file!"` followed by the Fluent code itself (does not require `#eval`). **/
   lang: (),
   /** <- array | string
     * The languages used — each corresponds to _lang.ftl_ inside the given path. **/
@@ -225,6 +224,9 @@
   // Normalizes lang as array
   if type(lang) != array {lang = (lang,)}
   if type(lang) == () {panic("Missing #transl(lang) argument")}
+  
+  data = data.pos().at(0, default: "")
+  if data == "" {return (l10n: "ftl", files: (:))}
   
   let scope = (
     DATA: repr(data),
@@ -261,7 +263,9 @@
   if data.starts-with("file!") {eval(code)} else {code}
 }
 
-/** 
+/**
+ * = Standard Data
+ * 
  * After setting Fluent as localization mechanism, _transl_ will use it from now
  * on. To go back to the default localization mechanism the `#std()` command
  * must be used:
