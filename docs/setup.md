@@ -1,65 +1,57 @@
 
 # Setup
 
-This project uses `just` to automate all development processes. Run `just` or
-refer to the [justfile](justfile) for more information.
+This project uses `just` to automate the development processes. Run `just` or
+refer to the [justfile](../justfile) for more information.
 
 Codetags like _TODO_ or _FIXME_ can be easily viewed using todo.
 
 
-## Release
+## Release Setup
 
-Install the package in default _preview_ namespace:
+Setup the package in the default _preview_ namespace.
 
 ```
 just install preview
-```
-
-To uninstall:
-
-```
 just remove preview
 ```
 
 
-## Testing
+## Testing Setup
 
-Install the package in a separated _local_ namespace:
+Setup the package in a testing _local_ namespace:
 
 ```
 just install local
-```
-
-To uninstall:
-
-```
 just remove local
 ```
 
-The command `just install-all` installs the package in both _preview_ and _local_
-namespaces with just one command.
 
+## Development Setup
 
-## Development
-
-Create a direct symbolic link between this project and and the _local_ namespace,
-under a special _0.0.0_ version:
+Setup a the special _local:0.0.0_ path through a symlink:
 
 ```
-just dev-link
+just symlink
 ```
 
 This way, every change made into the package will instantly be available to 
-Typst by using a `@local/min-book:0.0.0` import.
-
-This command is a toggle: run it once, and it creates the link; run it again and
-the link is removed; and so on.
+Typst.
 
 
 -------------------------
 
 
 ## Other Useful Commands
+
+
+### Tests
+
+Run the test suite (tytanic):
+
+```
+just test
+```
 
 
 ### Debug package
@@ -76,29 +68,31 @@ just install pkg
 Initialize a template project in `dev/` for the package:
 
 ```
-just init local
-just init preview
-```
-
-The package must be already installed in the given namespace (see
-[Release](#release) and [Testing](#testing)) for this to work. If no namespace
-is given, fallback to `just preview`.
-
-
-### Compile project files as PDF
-
-Compile the Typst files — generally the template and the manual, — as PDF files:
-
-```
-just pdf
+just init
 ```
 
 
-### Compile project files as PNG
+### Compile example
 
-Compile the Typst files — generally the template and the manual, — as image
-files:
+Compile example file as PDF and PNG in `dev/example/` path:
 
 ```
-just png
+just example
+```
+
+
+### Compile documentation
+
+Compile the manual file as PDF and PNG in `dev/doc/` path:
+
+```
+just doc
+```
+
+### Clean project
+
+Remove non-essential files from project:
+
+```
+just clean
 ```

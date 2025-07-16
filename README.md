@@ -9,6 +9,7 @@
 
 </center>
 
+
 ## Quick Start
 
 ```typ
@@ -23,6 +24,7 @@
 // Translate every "love" to Italian:
 #show: doc => transl("love", doc)
 ```
+
 
 ## Description
 
@@ -42,8 +44,8 @@ rules.
 
 - [Official manual](https://raw.githubusercontent.com/mayconfmelo/transl/refs/tags/0.0.1/docs/manual.pdf)
 - [Example PDF result](https://raw.githubusercontent.com/mayconfmelo/transl/refs/tags/0.0.1/docs/example.pdf)
-- [Example Typst code](https://github.com/mayconfmelo/transl/blob/0.0.1/template/main.typ)
-- [Changelog](https://github.com/mayconfmelo/transl/blob/main/changelog.md)
+- [Example Typst code](https://github.com/mayconfmelo/transl/blob/0.0.1/docs/example/main.typ)
+- [Changelog](https://github.com/mayconfmelo/transl/blob/main/docs/changelog.md)
 - [Development setup](https://github.com/mayconfmelo/transl/blob/main/docs/setup.md)
 
 
@@ -54,7 +56,7 @@ rules.
 - Translation of words and expressions
 - Fluent support
 - Simple `dictionary`-based translation database(YAML)
-- Translation through `show` rule
+- Translation through `#show` rule
 - Search for regular expression patterns
 - Contextualized strings (workaround for `context()` value)
 - Context-free strings

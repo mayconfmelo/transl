@@ -31,7 +31,7 @@
  * blocks at once. Regular expressions are supported as string patterns — not
  * `#regex` elements.
  * 
- * All the conceptual structure of _transl_ and its idea is heavily inspired on
+ * All the conceptual structure of _transl_ and its idea is heavily inspired by
  * the great #univ("linguify") package.
  * 
  * #pagebreak()
