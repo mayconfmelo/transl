@@ -15,12 +15,12 @@
 #import "@preview/transl:0.1.0": transl
 #transl(data: yaml("lang.yaml"))
 
-// Get "I love you" in Spanish:
 #set text(lang: "es")
+// Get "I love you" in Spanish:
 #transl("I love you")
 
-// Translate every "love" to Italian:
 #set text(lang: "it")
+// Translate every "love" to Italian:
 #show: doc => transl("love", doc)
 ```
 
@@ -46,7 +46,22 @@ rules.
 - [Changelog](https://github.com/mayconfmelo/transl/blob/main/changelog.md)
 - [Development setup](https://github.com/mayconfmelo/transl/blob/main/docs/setup.md)
 
+
+## Feature List
+
+- Translate to custom language
+- Translate to current `#text.lang`
+- Translation of words and expressions
+- Fluent support
+- Simple `dictionary`-based translation database(YAML)
+- Translation through `show` rule
+- Search for regular expression patterns
+- Contextualized strings (workaround for `context()` value)
+- Context-free strings
+
+
 ---------------
 
 The Fluent support is a fork of a [linguify](https://github.com/typst-community/linguify/)
-feature, and all the overall project concept is heavily inspired in this great package.
+feature, and all the overall project concept was heavily inspired by this great
+package.
