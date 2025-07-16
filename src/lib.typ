@@ -6,7 +6,7 @@
  * = Quick Start
  *
  * ```typ
- * #import "@preview/transl:0.1.0": transl
+ * #import "@preview/transl:0.0.1": transl
  * #transl(data: yaml("lang.yaml"))
  * 
  * // Get "I love you" in Spanish:

@@ -6,7 +6,7 @@
   title: "Translator",
   description: "Easy and simple translations for words and expressions",
   authors: "Maycon F. Melo <https://github.com/mayconfmelo>",
-  package: "transl:0.1.0",
+  package: "transl:0.0.1",
   license: "MIT",
   logo: image("docs/assets/manual-logo.png"),
   from-comments: read("src/lib.typ")
