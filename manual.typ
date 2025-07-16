@@ -71,18 +71,16 @@ database registered.
 The _expressions_ are simple strings that contains the text to be translated, or
 regular expression patterns that matches it. If more than one expression is
 given at the same time, their translations are concatenated with a space in
-between. When gets an expression, _transl_ tries to find it as string and then
-as a regex pattern if not find anything:
+between. When gets an expression, _transl_ tries to find it as string then as a
+regex pattern when nothing is found — in this case, the first entry that matches
+the regex will be used.
 
 ```typ
 #transl("exp.*?n")
 ```
 
-When searching the database, the first entry that matches the regex will be used.
-Fluent databases does not support regex patterns because the expressions must be
-text identifiers.
-
-
+Fluent databases does not support regex patterns directly because the expressions
+must be simple text identifiers, like variables.
 
 
 == Set Original Language
@@ -114,10 +112,32 @@ that fallback to the current `#text.lang` when not set.
 
 When used as a `show` rule, _transl_ allows to automatically translate all the
 expressions found in the text without using the command `#transl` each time.
-When multiple expression values are given, each one of them is replaced for its
-translation in the text; and when no expression is given, all available entries
-in the database for the language selected are used — see the
-`docs/example/lang.yaml` for more information.
+When multiple expression values are given, each one of them is translated through
+the text; and when no expression is given, all available database entries for the
+language selected are used — refer to `docs/example/main.typ` for an exemple.
+
+=== Show Rules With Fluent
+
+There is some limitations when using Fluent in `show` rules as it does not
+support to retrieve data using regex or text expressions, it must be a simple
+identifier (like a variable). However, this can be achieved using both Fluent
+and standard databases: by storing the localized translation in Fluent database
+and the expression to be searched in standard database.
+
+```typ
+#set text(lang: "es")
+#transl(data: yaml("en.yaml"))
+#transl(data: eval( fluent(data: "path", lang: "es") ))
+
+#show: doc => transl("identifier", from: "en", doc)
+```
+
+The `show` rule above translates `identifier` to Spanish using Fluent, but
+tries to find in standard database the expression to be searched in the text.
+Thus, the same identifier "`love`" could retrieve the translation "te amo mucho"
+from Fluent and also the expression "i love you so much" from standard database,
+so that in practice it translates "I love you so much" as "te amo mucho". This
+also allows to use regex patterns in these situations.
 
 
 == Get Contextual String
