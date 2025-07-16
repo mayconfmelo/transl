@@ -4,19 +4,17 @@
 
 #set text(font: "Arial", size: 12pt)
 
-// DEBUG: Show final translation database structure
-#import "@preview/transl:0.1.0": show-db
-#context show-db("final")
-
 
 = Translator Example
 
-This document is a practical example of how _transl_ works. If you are seeing
-the final PDF result, please refer to the `docs/assets/example.typ` source file
-to understand it better.
 
-// Set database example.yaml
+// Setting databases
+
+// Fluent database
+#transl(data: eval( fluent("ftl/", lang: ("en", "pt")) ))
+// Standard database
 #transl(data: yaml("langs.yaml"))
+// The last database defined is used by default: the standard database
 
 
 == Translating words
@@ -68,6 +66,8 @@ c'est une douleur qui rend fou sans faire mal."
 
 #transl("poem", to: "it")
 
+#pagebreak(weak: true)
+
 
 == Translating across the content
 
@@ -88,13 +88,6 @@ Of my single bed \
 We'll share the same room, yeah \
 For Jah provide the bread \
 
-#transl(data: fluent("file!" + read("ftl/pt.ftl"), lang: "pt") )
-
-// Get "cards" on Fluent database (Portuguese)
-// Get the expression equivalent to "cards" in standard database (English)
-// Translate all ocurrencies of the English expression to the Fluent Portuguese
-#show: doc => transl("cards", from: "en", to: "pt", doc)
-
 Is this love? Is this love? Is this love?\
 Is this love that I'm feeling?\
 Is this love? Is this love? Is this love?\
@@ -104,48 +97,27 @@ I got to know, got to know, got to know now\
 I-I-I-I-I-I-I-I-I, I'm willing and able\
 So I throw my cards on your table\
 
-// Set l10n back to "std"
-#transl(data: std())
-
-
-== Translating and tweaking
-
-#set text(lang: "pt")
-#context{
-  let translation = transl("love", mode: str)
-  
-  translation = upper(translation.first()) + translation.slice(1)
-  let color = red
-  for letter in translation {
-    text(fill: color, letter)
-    color = if color == red {rgb(252, 169, 227)} else {red}
-  }
-}
-
-
-== Translating context-free
-
-// Command must have #transl(..expr, to, data)
-#transl("love", to: "it", data: yaml("langs.yaml"))
-
 
 == Translating with localization by Fluent
 
-#import "@preview/transl:0.1.0": fluent
+#set text(lang: "pt")
+#transl(data: fluent())   // Set Fluent database
 
-// Set normalization for a single language and get the "declaration" expression
-#transl(
-  "declaration",
-  data: fluent("file!" + read("ftl/pt.ftl"), lang: "pt"),
-  args: (tense: "past")
-)
+#transl("declaration", args: (tense: "past"))
 
-// Set normalization for more than one language
-#transl(
-  data: eval( fluent("ftl/", lang: ("pt", "en")) ),
-  args: (tense: "past")
-)
-
-#transl("declaration")
+#transl("declaration")   // default tense is present (see ftl/pt.ftl)
 
 #transl("declaration", args: (tense: "future"))
+
+#transl(data: std())   // Set standard database
+
+
+== Get contextualized translated string
+
+#context transl("love", mode: str)
+
+
+== Get context-free translated string
+
+// Command must have #transl(..expr, to, data)
+#transl("love", to: "it", data: yaml("langs.yaml"))
