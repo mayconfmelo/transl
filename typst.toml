@@ -6,11 +6,11 @@ authors = ["Maycon F. Melo <@mayconfmelo>"]
 license = "MIT-0"
 description = "Easy and simple translations for words and expressions, with support for localization"
 categories = [ "layout", "book" ]
-keywords = [ "translation", "translator", "localization", "i18n", "i10n", "l10n", "fluent" ]
+keywords = [ "translation", "translator", "localization", "i18n", "l10n", "fluent" ]
 repository = "https://github.com/mayconfmelo/transl"
 exclude = [
   "dev/",
-  "test/",
+  "tests/",
   "docs/",
   "scripts/",
   ".git",
