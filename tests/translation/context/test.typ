@@ -8,6 +8,8 @@
 #context{
   let translation = transl("love", mode: str)
   
+  assert.eq(type(translation), str, message: "Must be string")
+  
   translation = upper(translation.first()) + translation.slice(1)
   let color = red
   for letter in translation {

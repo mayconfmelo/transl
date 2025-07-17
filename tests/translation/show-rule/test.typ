@@ -1,5 +1,6 @@
 #import "/src/lib.typ": transl, fluent
 #set page(height: auto, width: auto)
+// IDEA: Move all data to Fluent database
 #transl(data: yaml("/docs/example/langs.yaml"))
 
 
@@ -23,9 +24,7 @@ For Jah provide the bread \
 
 
 #transl(data: fluent("file!" + read("/docs/example/ftl/pt.ftl"), lang: "pt") )
-// Get "cards" translation on Fluent database (Portuguese)
-// Get the expression equivalent to "cards" in standard database (English)
-// Translate all ocurrencies of the English expression to the Portuguese translation
+// Translates all std.pt.cards expressions as ftl.en.cards
 #show: doc => transl("cards", from: "en", to: "pt", doc)
 
 Is this love? Is this love? Is this love?\
