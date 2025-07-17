@@ -3,11 +3,11 @@
 #transl(data: yaml("/docs/example/langs.yaml"))
 
 
-// Expresion in Portuguese
+// Expression in Portuguese
 #set text(lang: "pt")
 In Portuguese we say: #transl("i love you, my dear!")
 
-// Expresion in Spanish
+// Expression in Spanish
 #set text(lang: "es")
 In Spanish we say: #transl("i love you, my dear!")
 
@@ -15,5 +15,5 @@ In Spanish we say: #transl("i love you, my dear!")
 #set text(lang: "fr")
 In French we say: #transl("je t'aime mon amour!", from: "fr")
 
-// Expresion in Italian
+// Expression in Italian
 In Italian we say: #transl("i love you, my dear!", to: "it")

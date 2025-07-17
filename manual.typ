@@ -41,7 +41,7 @@ using `#fluent`, which can resolve the paths to the `flt` files and read them.
 In the code above, the files `path/pt.ftl` and `path/es.ftl` will be added to the
 standard translation database. Because of some Typst limitations on `#read`, it
 is required to wrap it inside an `#eval` command for now; alternatively, passing
-`"file!"` followed by tye Fluent code itself (as string) gets rid of the
+`"file!"` followed by the Fluent code itself (as string) gets rid of the
 evaluation:
 
 ```typ
@@ -58,7 +58,7 @@ mechanism; to go back to the standard localization mechanism, use:
 #transl( data: std(yaml("lang.yaml")) )
 ```
 
-The YAML database can be ommited if there is already a standard translation
+The YAML database can be omitted if there is already a standard translation
 database registered.
 
 
@@ -114,7 +114,7 @@ When used as a `show` rule, _transl_ allows to automatically translate all the
 expressions found in the text without using the command `#transl` each time.
 When multiple expression values are given, each one of them is translated through
 the text; and when no expression is given, all available database entries for the
-language selected are used — refer to `docs/example/main.typ` for an exemple.
+language selected are used — refer to `docs/example/main.typ` for an example.
 
 === Show Rules With Fluent
 
@@ -151,7 +151,7 @@ without the barrier of the `context()` value: when using contextual data, _trans
 returns an opaque `context()` value that cannot be manipulated; but this mode
 returns the contextualized string value instead, used inside a `#context` block.
 
-This is useful for package mantainers that need to manipulate or use the
+This is useful for package maintainers that need to manipulate or use the
 translated value in elements that only allows string arguments, like `#raw()`.
 
 

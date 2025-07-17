@@ -79,7 +79,7 @@
     
     cbor(ftl.get_message(config))
   }
-  else {panic("Mising #fluent-data(get) argument")}
+  else {panic("Missing #fluent-data(get) argument")}
 }
 
 
