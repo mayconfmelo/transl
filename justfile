@@ -48,11 +48,17 @@ symlink:
   bash scripts/dev-link.sh "{{root}}"
 
 # frequent dev commands.
+[private]
 dev:
   @just install preview
   @just example
   @just doc
   @just test
+  
+# run spell checking.
+[private]
+spell:
+  codespell --skip "*.pdf,dev/*,.git/*"  -L te,meu,ser,blessure
   
 # release a new package version.
 [private]
