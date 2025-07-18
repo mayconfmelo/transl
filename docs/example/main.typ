@@ -1,6 +1,6 @@
 // NAME: transl example usage
 
-#import "@preview/transl:0.0.1": transl, fluent, std
+#import "@preview/transl:0.1.0": transl, fluent, std
 
 #set text(font: "Arial", size: 12pt)
 
