@@ -58,7 +58,7 @@
    * — used as `#context transl(mode: str)`. **/
   args: (:),
   /** <- dictionary
-    * Fluent arguments used to customize the translation output. **/
+    * Arguments passed to Fluent, used to customize the translation output. **/
   ..expr
   /** <- strings
    * Expressions to be translated. **/
@@ -217,9 +217,6 @@
   lang: (),
   /** <- array | string
     * The languages used — each corresponds to _lang.ftl_ inside the given path. **/
-  args: (:)
-  /** <- dictionary | none
-    * Additional arguments passed to Fluent. **/
 ) = {
   // Normalizes lang as array
   if type(lang) != array {lang = (lang,)}
