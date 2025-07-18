@@ -1,5 +1,3 @@
-# TODO: Re-write
-
 root := justfile_directory()
 name := `grep '^name' typst.toml | cut -d'"' -f2`
 version := `grep '^version' typst.toml | cut -d'"' -f2`
@@ -17,8 +15,8 @@ remove target="preview":
   bash scripts/package.sh remove "{{target}}" "{{root}}"
   
 # run package tests.
-test where="":
-  tt run {{where}}
+test which="":
+  tt run {{which}}
   
 # compile the example file.
 example:
@@ -47,6 +45,10 @@ clean:
 symlink:
   bash scripts/dev-link.sh "{{root}}"
 
+# run spell checking.
+spell:
+  codespell --skip "*.pdf,dev/*,.git/*"  -L te,meu,ser,blessure
+
 # frequent dev commands.
 [private]
 dev:
@@ -54,11 +56,6 @@ dev:
   @just example
   @just doc
   @just test
-  
-# run spell checking.
-[private]
-spell:
-  codespell --skip "*.pdf,dev/*,.git/*"  -L te,meu,ser,blessure
   
 # release a new package version.
 [private]
@@ -71,7 +68,7 @@ new version:
   bash scripts/version.sh "{{version}}" "{{root}}"
   @just packages
   
-# just build locally (used in CI).
+# install and build it (used in CI).
 [private]
 build:
   @just install preview
