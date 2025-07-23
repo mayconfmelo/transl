@@ -56,7 +56,7 @@
   /** <- type
    * Type of value returned: an opaque `context()` or a contextualized `str`
    * — used as `#context transl(mode: str)`. **/
-  args: (:),
+  //args: (:),
   /** <- dictionary
     * Arguments passed to Fluent, used to customize the translation output. **/
   ..expr
@@ -65,8 +65,7 @@
 ) = {
   import "utils.typ"
   
-  if expr.named() != (:) {panic("unexpected argument: " + repr(expr.named()))}
-  
+  let args = expr.named()
   let expr = expr.pos()
   let l10n = "std"
   let showing = if expr != () and type(expr.last()) == content {true} else {false}
@@ -79,7 +78,7 @@
     l10n = data.at("l10n", default: "std")
     data = data.at("files", default: data)
     
-    if not showing {
+    if not showing and mode != str {
       // Insert data into the translation database
       if data != (:) {utils.db(add: l10n, data)}
       if mode != str {utils.db(add: "l10n", l10n)}
@@ -103,6 +102,10 @@
     let to = if to == auto {text.lang} else {to}
     let result = ()
     let expr = expr
+    
+    if args != (:) and l10n == "std" {
+      panic("unexpected argument: " + repr(expr.named()))
+    }
     
     // If target language is available in database
     if data.at(l10n).keys().contains(to) {
