@@ -1,14 +1,8 @@
-#import "/src/lib.typ": transl, fluent
+#import "/src/lib.typ": transl, fluent, std
 #set page(height: auto, width: auto)
 #transl( data: fluent("file!" + read("/docs/example/ftl/en.ftl"), lang: "pt") )
 
 #set text(lang: "pt")
 
-// Get declaration in past tense
-#transl("declaration", tense: "past")
-
-// Default tense is present
+// The same as #transl("declaration", tense: "present")
 #transl("declaration")
-
-// Get declaration in future tense
-#transl("declaration", tense: "future")
