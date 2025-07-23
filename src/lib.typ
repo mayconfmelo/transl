@@ -104,7 +104,7 @@
     let expr = expr
     
     if args != (:) and l10n == "std" {
-      panic("unexpected argument: " + repr(expr.named()))
+      panic("Unexpected arguments: " + repr(args))
     }
     
     // If target language is available in database
