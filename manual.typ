@@ -140,6 +140,26 @@ so that in practice it translates "I love you so much" as "te amo mucho". This
 also allows to use regex patterns in these situations.
 
 
+== Fluent Arguments
+
+Fluent allows to use special arguments to obtain gramatical contextualization,
+like different plural and singular sentences, cardinal numbering, or just insert
+custom expressions inside the translation. When using a Fluent database, any
+additional argument in `#transl` is considered a Fluent argument. For example:
+
+```typ
+#transl("identifier", case: "nominative")
+#transl("identifier", gender: "masculine")
+#transl("identifier", number: "singular")
+#transl("identifier", tense: "present")
+#transl("identifier", name: "John Doe")
+```
+
+None of these are `#transl` arguments, therefore they are passed to Fluent. Be
+aware that these same additional arguments will throw a `#panic` when using the
+standard database though.
+
+
 == Get Contextual String
 
 ```typ
