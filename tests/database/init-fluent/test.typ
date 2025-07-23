@@ -9,13 +9,16 @@
 #let single = fluent("file!" + read("/docs/example/ftl/en.ftl"), lang: "en")
 
 #assert.eq(
-  type(code), str, message: "Must be string: " + repr(code)
+  type(code), str,
+  message: "Must be string: " + repr(code)
 )
 #assert.eq(
-  type(multiple), dictionary, message: "Must be dictionary: " + repr(multiple)
+  type(multiple), dictionary,
+  message: "Must be dictionary: " + repr(multiple)
 )
 #assert.eq(
-  type(single), dictionary, message: "Must be dictionary: "
+  type(single), dictionary,
+  message: "Must be dictionary: "
 )
 
 // Set files as Fluent databases

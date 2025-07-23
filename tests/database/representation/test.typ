@@ -4,7 +4,7 @@
 
 // Import data from standard (YAML) and Fluent mechanisms
 #transl(data: yaml("/docs/example/langs.yaml"))
-#transl(data: eval(fluent("/docs/example/ftl", lang: ("en", "pt"))))
+#transl(data: eval( fluent("/docs/example/ftl", lang: ("en", "pt")) ))
 
 // Show the final database, visualized as YAML
 #context show-db()
