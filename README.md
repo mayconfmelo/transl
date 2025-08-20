@@ -6,6 +6,7 @@
 
   [![Tests](https://github.com/mayconfmelo/transl/actions/workflows/tests.yml/badge.svg)](https://github.com/mayconfmelo/transl/actions/workflows/tests.yml)
   [![Build](https://github.com/mayconfmelo/transl/actions/workflows/build.yml/badge.svg)](https://github.com/mayconfmelo/transl/actions/workflows/build.yml)
+  [![Spellcheck](https://github.com/mayconfmelo/transl/actions/workflows/spellcheck.yml/badge.svg)](https://github.com/mayconfmelo/transl/actions/workflows/spellcheck.yml)
 
 </center>
 
