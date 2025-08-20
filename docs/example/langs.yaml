@@ -1,11 +1,13 @@
 # NAME: transl example database
 
-default: "en"  # Default language to fallback of tue one selectednis not found
+# lang:
+#   expression: translation to lang
 
-pt:   # the language identifier must be the same used by Typst
-  love: amor   # Translation of "love"
-  i love you, my dear!: Eu te amo, meu amor!   # Translation of "i love you, my dear!"
-  # Translation of a poem excerpt
+default: "en"  # fallback language
+
+pt:
+  love: amor
+  i love you, my dear!: Eu te amo, meu amor!
   poem: |
     Amor é fogo que arde sem se ver,
     é ferida que dói, e não se sente;

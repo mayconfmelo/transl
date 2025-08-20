@@ -1,6 +1,6 @@
 // NAME: transl example usage
 
-#import "@preview/transl:0.1.0": transl, fluent, std
+#import "@preview/transl:0.1.1": transl, fluent, std
 
 #set text(font: "Arial", size: 12pt)
 
@@ -103,11 +103,11 @@ So I throw my cards on your table\
 #set text(lang: "pt")
 #transl(data: fluent())   // Set Fluent database
 
-#transl("declaration", args: (tense: "past"))
+#transl("declaration", tense: "past")
 
 #transl("declaration")   // default tense is present (see ftl/pt.ftl)
 
-#transl("declaration", args: (tense: "future"))
+#transl("declaration", tense: "future")
 
 #transl(data: std())   // Set standard database
 
