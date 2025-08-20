@@ -2,66 +2,55 @@
 
 #import "utils.typ": show-db
 
-/**
- * = Quick Start
- *
- * ```typ
- * #import "@preview/transl:0.1.0": transl
- * #transl(data: yaml("lang.yaml"))
- * 
- * // Get "I love you" in Spanish:
- * #set text(lang: "es")
- * #transl("I love you")
- * 
- * // Translate every "love" to Italian:
- * #set text(lang: "it")
- * #show: doc => transl("love", doc)
- * ```
- * 
- * = Description
- * 
- * Get comprehensive and contextual translations, with support for regular
- * expressions and #url("https://projectfluent.org/", "Fluent") localization.
- * This package have one main command, `#transl`, that receives one or more
- * expression strings, searches for each of them in its database and then
- * returns the translation for each one.
- * 
- * The expressions are the text to be translated, they can be simple words or
- * longer text excerpts, or can be used as identifiers to obtain longer text
- * blocks at once. Regular expressions are supported as string patterns — not
- * `#regex` elements.
- * 
- * All the conceptual structure of _transl_ and its idea is heavily inspired by
- * the great #univ("linguify") package.
- * 
- * #pagebreak()
- * 
- * = Options
- * 
- * These are all the options and its defaults used:
- * 
- * :transl:
+/** #v(1fr)#outline()#v(1.2fr)
+#pagebreak()
+
+= Quick Start
+
+```typ
+#import "@preview/transl:0.1.0": transl
+#transl(data: yaml("lang.yaml"))
+
+#set text(lang: "es")
+// Get "I love you" in Spanish:
+#transl("I love you")
+
+#set text(lang: "it")
+// Translate every "love" to Italian:
+#show: doc => transl("love", doc)
+```
+
+= Description
+
+Get comprehensive and contextual translations, with support for regular
+expressions and #url("https://projectfluent.org/", "Fluent") localization.
+This package have one main command, `#transl`, that receives one or more
+expression strings, searches for each of them in its database and then
+returns the translation for each one.
+
+The expressions are the text to be translated, they can be simple words or
+longer text excerpts, or can be used as identifiers to obtain longer text
+blocks at once. Regular expressions are supported as string patterns — not
+`#regex` elements.
+
+All the conceptual structure of _transl_ and its idea is heavily inspired by
+the great #univ("linguify") package.
+
+= Options
+
+:transl:
 **/
 #let transl(
-  from: auto,
-  /** <- string
-   * Initial origin language.**/
-  to: auto,
-  /** <- string | auto
-   * Final target language — fallback to `#text.lang` when not set. **/
-  data: none,
-  /** <- yaml | dictionary
-   * Translation file — see the `docs/assets/example.yaml` file.**/
-  mode: context(),
-  /** <- type
-   * Type of value returned: an opaque `context()` or a contextualized `str`
-   * — used as `#context transl(mode: str)`. **/
-  //args: (:),
-  /** <- dictionary
-    * Arguments passed to Fluent, used to customize the translation output. **/
-  ..expr
-  /** <- strings
-   * Expressions to be translated. **/
+  from: auto, /// <- string
+    /// Initial origin language. |
+  to: auto, /// <- string | auto
+    /// Final target language — fallback to `#text.lang` if not set. |
+  data: none, /// <- yaml | fluent | dictionary
+    /// Translation file (see `docs/assets/example.yaml` file). |
+  mode: context(), /// <- context() | str
+    /// Type of value returned: an opaque context or string. |
+  ..expr /// <- strings
+    /// Expressions to be translated. |
 ) = {
   import "utils.typ"
   
@@ -199,27 +188,25 @@
 }
 
 
-// UTIL: Resolve Fluent data for translation database. Used inside #eval
 /**
- * = Fluent Data
- * 
- * :fluent:
- * 
- * Fluent is a localization solution (L10n) developed by Mozilla that can easily
- * solve those wild language-specific variations that are tricky to fix in code,
- * like gramatical case, gender, number, tense, aspect, or mood. When used to
- * set `#transl(data)`, this function signalizes _transl_ to use its embed
- * Fluent plugin instead of the standard mechanism (YAML). It may need to
- * be wrapped in an `#eval` to work properly.
+= Fluent Data
+
+:fluent:
+
+Fluent is a localization solution (L10n) developed by Mozilla that can easily
+solve those wild language-specific variations that are tricky to fix in code,
+like gramatical case, gender, number, tense, aspect, or mood. When used to
+set `#transl(data)`, this function signalizes _transl_ to use its embed
+Fluent plugin instead of the standard mechanism (YAML). It may need to
+be wrapped in an `#eval` to work properly.
 **/
 #let fluent(
-  ..data,
-  /** <- string
-    * Path to where the `ftl` files are stored in the project (requires `#eval`)
-    * or `"file!"` followed by the Fluent code itself (does not require `#eval`). **/
-  lang: (),
-  /** <- array | string
-    * The languages used — each corresponds to _lang.ftl_ inside the given path. **/
+  ..data, /// <- "path/" | "file!data"
+    /** Fluent data: a path to where the `ftl` files are stored (requires `#eval`),
+    or the data itself preceded by `"file!"` (does not require `#eval`). |**/
+  lang: (), /// <- array | string
+    /** Languages of the Fluent data: multiple corresponding each to a file inside
+    the data path, or a single one corresponding to the data itself passed. |**/
 ) = {
   // Normalizes lang as array
   if type(lang) != array {lang = (lang,)}
@@ -264,13 +251,13 @@
 }
 
 /**
- * = Standard Data
- * 
- * After setting Fluent as localization mechanism, _transl_ will use it from now
- * on. To go back to the default localization mechanism the `#std()` command
- * must be used:
- * 
- * :std:
+= Standard Data
+
+After setting Fluent as localization mechanism, _transl_ will use it from now
+on. To go back to the default translation mechanism the `#std()` command
+must be used:
+
+:std:
 **/
 #let std(
   data: (:)

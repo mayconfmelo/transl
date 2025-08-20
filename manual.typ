@@ -1,20 +1,22 @@
 // NAME: Manual for transl
 
-#import "@preview/min-manual:0.1.1": manual, arg, univ, url
+#import "@preview/min-manual:0.2.0": manual, arg, univ, url
 
 #show: manual.with(
   title: "Translator",
   description: "Easy and simple translations for words and expressions",
-  authors: "Maycon F. Melo <https://github.com/mayconfmelo>",
+  authors: "Maycon F. Melo <@mayconfmelo>",
   package: "transl:0.1.0",
   license: "MIT",
   logo: image("docs/assets/manual-logo.png"),
   from-comments: read("src/lib.typ")
 )
 
+
 = Use Cases
 
-== Standard Translation Database
+
+== Set Standard Translation Database
 
 ```typ
 #transl(data: yaml("lang.yaml"))
@@ -28,7 +30,7 @@ multiple files (e.g., one for each language) for better organization. See
 translation database.
 
 
-== Fluent Translation Database
+== Set Fluent Translation Database
 
 ```typ
 #transl(
@@ -115,6 +117,7 @@ expressions found in the text without using the command `#transl` each time.
 When multiple expression values are given, each one of them is translated through
 the text; and when no expression is given, all available database entries for the
 language selected are used — refer to `docs/example/main.typ` for an example.
+
 
 === Show Rules With Fluent
 
