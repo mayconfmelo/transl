@@ -14,7 +14,7 @@
 ## Quick Start
 
 ```typ
-#import "@preview/transl:0.1.0": transl
+#import "@preview/transl:0.1.1": transl
 #transl(data: yaml("lang.yaml"))
 
 #set text(lang: "es")
@@ -43,9 +43,9 @@ rules.
 
 ## More Information
 
-- [Official manual](https://raw.githubusercontent.com/mayconfmelo/transl/refs/tags/0.1.0/docs/manual.pdf)
-- [Example PDF result](https://raw.githubusercontent.com/mayconfmelo/transl/refs/tags/0.1.0/docs/example.pdf)
-- [Example Typst code](https://github.com/mayconfmelo/transl/blob/0.1.0/docs/example/main.typ)
+- [Official manual](https://raw.githubusercontent.com/mayconfmelo/transl/refs/tags/0.1.1/docs/manual.pdf)
+- [Example PDF result](https://raw.githubusercontent.com/mayconfmelo/transl/refs/tags/0.1.1/docs/example.pdf)
+- [Example Typst code](https://github.com/mayconfmelo/transl/blob/0.1.1/docs/example/main.typ)
 - [Changelog](https://github.com/mayconfmelo/transl/blob/main/docs/changelog.md)
 - [Development setup](https://github.com/mayconfmelo/transl/blob/main/docs/setup.md)
 
