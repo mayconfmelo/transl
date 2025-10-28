@@ -14,6 +14,6 @@
 
 ### 0.1.1
 
-- Fixed: `#transl(mode: str)` used to return `content` because of state update
-- Updated: `#transl(data)` don't update database when `#transl(mode: str)` anymore
+- Fixed: `#transl(data, mode: str)` used to return `content` because of a state update
+  - `#transl(data)` state update not done anymore when `#transl(mode: str)`
 - Updated: Fluent arguments `#transl(args: (foo: bar))` &rarr; `#transl(foo: bar)`

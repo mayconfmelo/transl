@@ -5,7 +5,7 @@
 
 #set text(lang: "pt")
 // Receives a contextualized string and manipulates it
-#context{
+#context {
   let translation = transl("love", mode: str)
   
   assert.eq(type(translation), str, message: "Must be string")
