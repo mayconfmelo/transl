@@ -53,6 +53,7 @@ the great #univ("linguify") package.
     /// Expressions to be translated. |
 ) = {
   import "utils.typ"
+  import "@preview/toolbox:0.1.0": storage, has
   
   let args = expr.named()
   let expr = expr.pos()
@@ -61,16 +62,34 @@ the great #univ("linguify") package.
   let body = if showing {expr.pop()} else {none}
   
   if data != none {
+    let l10n
+  
     if to != auto {mode = str}
     
-    // Manage output of #fluent()
-    l10n = data.at("l10n", default: "std")
-    data = data.at("files", default: data)
+    // Set l10n value
+    if type(data) == dictionary {
+      if not has.key(data, "l10n") {data.insert("l10n", "std")}
+      
+      l10n = data.l10n
+      let _ = data.remove("l10n")
+    }
+    else if type(data) == str {
+      let new = (:)
+      let lang = args.at("lang", default: none)
+      
+      assert.ne(lang, none, message: "#transl(lang) option also required")
+      new.insert(lang, data)
+      
+      l10n = "ftl"
+      data = new
+    }
+    else {
+      panic("Invalid database type: " + repr(type(data)))
+    }
     
     if not showing and mode != str {
-      // Insert data into the translation database
-      if data != (:) {utils.db(add: l10n, data)}
-      if mode != str {utils.db(add: "l10n", l10n)}
+      storage.add(l10n, data, append: true, namespace: "transl")
+      //storage.add("l10n", l10n, namespace: "transl")
     }
     
     // Allows context-free use
@@ -153,6 +172,7 @@ the great #univ("linguify") package.
     return (expr, result)
   }
   
+  
   // When using #show: transl or else #transl
   if showing {
     context {
@@ -186,86 +206,3 @@ the great #univ("linguify") package.
     else {panic("Invalid mode: " + repr(mode))}
   }
 }
-
-
-/**
-= Fluent Data
-
-:fluent:
-
-Fluent is a localization solution (L10n) developed by Mozilla that can easily
-solve those wild language-specific variations that are tricky to fix in code,
-like gramatical case, gender, number, tense, aspect, or mood. When used to
-set `#transl(data)`, this function signalizes _transl_ to use its embed
-Fluent plugin instead of the standard mechanism (YAML). It may need to
-be wrapped in an `#eval` to work properly.
-**/
-#let fluent(
-  ..data, /// <- "path/" | "file!data"
-    /** Fluent data: a path to where the `ftl` files are stored (requires `#eval`),
-    or the data itself preceded by `"file!"` (does not require `#eval`). |**/
-  lang: (), /// <- array | string
-    /** Languages of the Fluent data: multiple corresponding each to a file inside
-    the data path, or a single one corresponding to the data itself passed. |**/
-) = {
-  // Normalizes lang as array
-  if type(lang) != array {lang = (lang,)}
-  if type(lang) == () {panic("Missing #transl(lang) argument")}
-  
-  data = data.pos().at(0, default: "")
-  if data == "" {return (l10n: "ftl", files: (:))}
-  
-  let scope = (
-    DATA: repr(data),
-    LANGS: repr(lang),
-    IS-FILE: repr(data.starts-with("file!"))
-  )
-  
-  // Code to be evaluated
-  let code = ```typst
-    let result = (
-      l10n: "ftl",
-      files: (:),
-    )
-    
-    if not IS-FILE {
-      for lang in LANGS {
-        result.files.insert(lang, str(read(DATA + "/" + lang + ".ftl")))
-      }
-    }
-    else {
-      result.files.insert(LANGS.at(0), str(DATA).slice(5))
-    }
-    
-    result
-  ```.text
-  
-  // Replace the PLACEHOLDERs by their respective values
-  code = code.replace(
-    regex("\b(" + scope.keys().join("|") + ")\b"),
-    m => scope.at(m.text)
-  )
-  
-  // Eval if data is "file!" string, or return code to be evaluated
-  if data.starts-with("file!") {eval(code)} else {code}
-}
-
-/**
-= Standard Data
-
-After setting Fluent as localization mechanism, _transl_ will use it from now
-on. To go back to the default translation mechanism the `#std()` command
-must be used:
-
-:std:
-**/
-#let std(
-  data: (:)
-) = {
-  (
-    l10n: "std",
-    files: (:),
-  )
-}
-
-/// The `#std` command does not need to be wrapped in an `#eval`.
