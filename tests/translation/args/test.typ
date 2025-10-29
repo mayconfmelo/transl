@@ -13,5 +13,5 @@
 
 #transl("declaration", nick: "minha vida", tense: "future")
 
-// Fron standard database (simple arguments)
+// From standard database (simple arguments)
 #transl("longing", nick: "meu amor")...
