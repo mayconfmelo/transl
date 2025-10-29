@@ -57,10 +57,6 @@ spell correct="no":
     --skip "*.pdf,./dev/*,.git/*,./docs/example/lang/*" \
     --ignore-words-list "meu"
 
-# init template in dev/
-init:
-  typst init '@preview/{{name}}:{{version}}' dev/{{name}}
-
 # useful dev commands.
 [private]
 dev:
