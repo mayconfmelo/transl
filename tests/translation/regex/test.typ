@@ -1,15 +1,11 @@
 #import "/src/lib.typ": transl
-#set page(height: auto)
-#transl(data: yaml("/docs/example/langs.yaml"))
+#set page(width: auto, height: auto, margin: 1em)
+#transl(data: yaml("/docs/example/lang/std.yaml"))
 
-#set text(lang: "it")
-// Pattern to match "we'll share"
-#transl("we.*?re")
+#set text(lang: "pt")
+#transl("l.{2}e") // love
 
-#show: doc => transl("i.+my.+!", doc)
 
-I love you, my dear!
+#show: doc => transl("i .{4}.*my.dear", doc) // i love you, my dear
 
-I kinda like you as more than my friend!
-
-I hate you, my enemy!
+I love you, my dear! I always loved you!

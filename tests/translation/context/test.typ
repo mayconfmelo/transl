@@ -1,24 +1,27 @@
 #import "/src/lib.typ": transl
-#set page(height: auto, width: auto)
-#transl(data: yaml("/docs/example/langs.yaml"))
-
+#set page(height: auto, width: auto, margin: 1em)
+#transl(data: read("/docs/example/lang/ftl/pt.ftl"), lang: "pt")
 
 #set text(lang: "pt")
-// Receives a contextualized string and manipulates it
+
+
+// Retrieve an opaque context()
+Opaque: #transl("passion")
+
+// Allow to access string inside a context
+Contextualized:
 #context {
-  let translation = transl("love", mode: str)
+  let string = transl("passion", mode: str)
   
-  assert.eq(type(translation), str, message: "Must be string")
-  
-  translation = upper(translation.first()) + translation.slice(1)
-  let color = red
-  for letter in translation {
-    text(fill: color, letter)
-    color = if color == red {rgb(252, 169, 227)} else {red}
-  }
+  "-"
+  for letter in string [#{letter}-]
 }
 
-
-// Receives a normal string
-// Command must have #transl(..expr, to, data)
-#transl("love", to: "it", data: yaml("/docs/example/langs.yaml"))
+// Retrieve just a string, without context
+Plain: 
+#let string = transl(
+  "passion",
+  to: "pt",
+  data: read("/docs/example/lang/ftl/pt.ftl"), lang: "pt"
+)
+#string.slice(0,3)-#string.slice(3)
