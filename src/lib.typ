@@ -130,11 +130,12 @@ from this great package.
         body = {
           show re: it => {
             let text = it.text
-            let cap = upper(text.first())
+            let first = text.first()
             
-            if text.first() != cap {translated}
-            else if text == upper(translated) {upper(translated)}
-            else {upper(translated.first()) + translated.slice(1)}
+            if first == lower(first) {utils.first-lower(translated)}
+            else if text == upper(text) {upper(translated)}
+            else if first == upper(first) {utils.first-upper(translated)}
+            else {translated}
           }
           body
         }

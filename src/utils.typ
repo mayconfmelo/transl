@@ -20,7 +20,6 @@
   // Return back expression (no translation needed)
   if from == to {return expr}
   
-  
   if has.key(std.at(to, default: (:)), expr) {
     // Retrieve expr in standard database
     std
@@ -68,3 +67,10 @@
     else {panic("'" + expr + "' not found for '" + to + "'")}
   }
 }
+
+
+// Return word with uppercased first letter (sentence-case)
+#let first-upper(word) = {upper(word.first()) + word.slice(1)}
+
+// Return word with lowercased first letter
+#let first-lower(word) = {lower(word.first()) + word.slice(1)}

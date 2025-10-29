@@ -16,4 +16,8 @@ In this text the words hot, passionate, and passion were automatically translate
 // Translation from data.ftl.it.much
 #show: transl.with("much", from: "en", to: "it")
 
-I love you so much! I always loved you!
+I LOVE YOU SO MUCH!
+
+I love you so much!
+
+i love you so much!
