@@ -1,123 +1,124 @@
-// NAME: transl example usage
+#import "@preview/transl:0.0.0": transl
 
-#import "@preview/transl:0.1.1": transl, fluent, std
-
+#set page(height: auto)
 #set text(font: "Arial", size: 12pt)
 
 
 = Translator Example
+This file is compiled from `docs/example/main.typ` file, check it also.
 
 
 // Setting databases
-
-// Fluent database
-#transl(data: eval( fluent("ftl/", lang: ("en", "pt")) ))
-// Standard database
-#transl(data: yaml("langs.yaml"))
-// The last database defined is used by default: the standard database
+#transl(data: yaml("lang/std.yaml")) // standard database
+#transl(data: yaml("lang/ftl.yaml")) // Fluent database
+#transl(data: read("lang/ftl/pt.ftl"), lang: "pt") // individual Fluent file
 
 
-== Translating words
+== Retrieve translation
+// Search translation database for expression "love" in target language.
 
 #set text(lang: "pt")
-Love in Portuguese: #transl("love").
+Portuguese: #transl("love").
 
 #set text(lang: "es")
-Love in Spanish: #transl("love").
+Spanish: #transl("love").
 
+// #transl(from) equal to target language; get tue expression itself.
 #set text(lang: "fr")
-// There's no "fr" entry in database.
-Love in French: #transl("amour", from: "fr").
+French: #transl("amour", from: "fr"). 
 
-Love in Italian: #transl("love", to: "it").
+Italian: #transl("love", to: "it"). // #transl(to) also set target language.
 
 
-== Translating expressions
+=== Phrase
+// Translate an entire phrase.
 
 #set text(lang: "pt")
-In Portuguese we say: #transl("i love you, my dear!")
-
-#set text(lang: "es")
-In Spanish we say: #transl("i love you, my dear!")
-
-#set text(lang: "fr")
-// There's no "fr" entry in database.
-In French we say: #transl("je t'aime mon amour!", from: "fr")
-
-In Italian we say: #transl("i love you, my dear!", to: "it")
+#transl("i love you, my dear")!
 
 
-== Translating whole sections
-
-#set text(lang: "pt")
-#transl("poem")
+=== Text block
+// Get a chunk of text using a identifier.
 
 #set text(lang: "es")
 #transl("poem")
 
-#set text(lang: "fr")
-// There's no "fr" entry in database.
-#transl(from: "fr",
-"L'amour est un feu qui brûle sans être vu,
-c'est une blessure qui fait mal mais qu'on ne ressent pas;
-c'est un contentement insatisfait,
-c'est une douleur qui rend fou sans faire mal."
-)
 
-#transl("poem", to: "it")
+== Translating ocurrencies within text
+// #show rule automatically translates the all ocurrencies of given expressions
 
-#pagebreak(weak: true)
+#show: transl.with("hot", "passionate", "passion", to: "es")
 
+The Spanish word "hot" is quite interesting; it has the same meaning as in
+English: to be warm --- boiling, even ---, but hot has a kind of
+spicyness to it that cannot be well explained. Hispanic peoples are often called
+hot because of their passion --- in fact, a synonym for to possess passion is
+"passionate" (burning, fiery). Interestingly, in Portuguese there is no word
+similar to hot; the word "caloroso" is the literal translation (to be warm) but
+has a different meaning of amiability or excitement.
 
-== Translating across the content
+In this text the words hot, passionate, and passion were automatically translated.
 
-#set text(lang: "it")
-#show: doc => transl(
-  "every .*? night", "know", "love you", "love", "we'll share",
-  doc
-)
+=== Use identifier expression
+// Get translation from Fluent and #show rule pattern from standard database
 
-I wanna love you \
-And treat you right \
-I wanna love you \
-Every day and every night \
-We'll be together \
-With a roof right over our heads \
-We'll share the shelter \
-Of my single bed \
-We'll share the same room, yeah \
-For Jah provide the bread \
+#show: transl.with("much", from: "en", to: "it")
 
-Is this love? Is this love? Is this love?\
-Is this love that I'm feeling?\
-Is this love? Is this love? Is this love?\
-Is this love that I'm feeling?\
-I wanna know, wanna know, wanna know now\
-I got to know, got to know, got to know now\
-I-I-I-I-I-I-I-I-I, I'm willing and able\
-So I throw my cards on your table\
+I love you so much!
 
 
-== Translating with localization by Fluent
-
+== Localize translations
 #set text(lang: "pt")
-#transl(data: fluent())   // Set Fluent database
-
-#transl("declaration", tense: "past")
-
-#transl("declaration")   // default tense is present (see ftl/pt.ftl)
-
-#transl("declaration", tense: "future")
-
-#transl(data: std())   // Set standard database
 
 
-== Get contextualized translated string
+=== Using Fluent
+// Use localization cases and substitute variables based on additional arguments
 
-#context transl("love", mode: str)
+#transl("declaration", nick: "meu bem", tense: "past")
+
+#transl("declaration", nick: "meu amor")
+
+#transl("declaration", nick: "minha vida", tense: "future")
 
 
-== Get context-free translated string
+=== Using standard database
+// Substitute variables based on additional arguments
 
-// Command must have #transl(..expr, to, data)
-#transl("love", to: "it", data: yaml("langs.yaml"))
+#transl("longing", nick: "meu amor")...
+
+
+== Use regular expressions
+// Match expressions in database using regex
+
+#transl("you.{3} b.*?l", to: "it") // you're beautiful
+
+
+== Values retrieved
+
+
+=== Context value
+// Retrieve an opaque context()
+
+#transl("passion")
+
+
+=== Context-dependent string
+// Allow to access string inside a context
+
+#context {
+  let string = transl("passion", mode: str)
+  
+  "-"
+  for letter in string [#{letter}-]
+}
+
+
+=== Plain string
+// Retrieve just a string, without context
+
+#let string = transl(
+  "passion",
+  to: "pt",
+  data: read("lang/ftl/pt.ftl"), lang: "pt"
+)
+#string.slice(0,3)-#string.slice(3)

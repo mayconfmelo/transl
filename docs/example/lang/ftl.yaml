@@ -1,0 +1,9 @@
+l10n: ftl  # sets this as a Fluent database.
+
+es: |
+  poem =
+    El amor es un fuego que arde sin ser visto,
+    es una herida que duele pero no se siente;
+    es una satisfacción descontenta,
+    es un dolor que enloquece sin doler.
+  hot = caliente
