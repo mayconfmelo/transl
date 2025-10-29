@@ -3,13 +3,19 @@
 
 ## 0.1.0
 
-- Simple YAML/dictionary-based database
-- Fluent support
-- Translation of words and expressions
-- Translation through `show` rule
+- Optional `#transl(from)` sets original text language
+- Optional `#transl(to)` sets target translation language
+- Automatic translation to `#text.lang` language
+- Robust translation database
+  - Standard (simple dictionary)
+  - Fluent files
+- Support for `#show` rules
 - Regular expression patterns
-- Contextualized strings (workaround for `context()`)
-- Context-free strings
+- Multiple ways to obtain values
+  - Retrieve `context()` values
+  - Retrieve contextualized strings
+  - Retrieve plain strings
+- Localization through Fluent arguments
 
 
 ### 0.1.1
@@ -17,3 +23,16 @@
 - Fixed: `#transl(data, mode: str)` used to return `content` because of a state update
   - `#transl(data)` state update not done anymore when `#transl(mode: str)`
 - Updated: Fluent arguments `#transl(args: (foo: bar))` &rarr; `#transl(foo: bar)`
+
+
+## 0.2.0
+
+- Internal re-design
+- Removed: `#fluent` command
+- Removed: `#std` command
+- Added: Fluent YAML database
+- Added: `{{$arg}}` patterns (localization arguments) for standard database
+- Added: `#transl(expression)` can be regular expression strings
+- Added: Use Fluent database in `#show` rules
+  - Rule pattern from standard database
+  - Translation string from Fluent database

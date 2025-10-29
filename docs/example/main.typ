@@ -1,4 +1,4 @@
-#import "@preview/transl:0.0.0": transl
+#import "@preview/transl:0.2.0": transl
 
 #set page(height: auto)
 #set text(font: "Arial", size: 12pt)
@@ -23,7 +23,7 @@ Portuguese: #transl("love").
 #set text(lang: "es")
 Spanish: #transl("love").
 
-// #transl(from) equal to target language; get tue expression itself.
+// #transl(from) equal to target language; get the expression itself.
 #set text(lang: "fr")
 French: #transl("amour", from: "fr"). 
 
