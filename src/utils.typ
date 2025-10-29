@@ -1,97 +1,70 @@
-// NAME: Utilities internal sub-module
-
-// UTIL: Check if given required arguments are provided
-#let required-args(..args) = {
-  for arg in args.named().keys() {
-    if args.named().at(arg) == none {
-      panic("Missing required argument: " + arg)
-    }
-  }
+// Retrieve Fluent data using wasm plugin
+#let fluent(get, lang, data, args: (:)) = {
+  let wasm = plugin("./linguify_fluent_rs.wasm")
+  let source = data.at(lang)
+  let config = cbor.encode((source: source, msg-id: get, args: args))
+  
+  cbor(wasm.get_message(config))
 }
 
 
-// UTIL: Check if given value is of one of the types
-#let type-check(arg, ..types, die: false) = {
-  let contxt = [#context()].func()
-  let match = false
-
-  if types.pos().contains(type(arg)) {match = true}
-  else if type(arg) == content and arg.func() == contxt {match = true}
+// Retrieve translation
+#let translate(expr, from, to, data, args, showing) = {
+  import "@preview/toolbox:0.1.0": storage, has
   
-  if die == false {return match}
-  else if match == false {panic("Invalid value type: " + type(arg))}
-  }
-}
-
-
-// UTIL: Manage and store data in the translation database (see USAGE)
-#let db(
-  add: none,
-  get: none,
-  del: none,
-  upd: none,
-  ..val
-) = {
-  let state-name = "transl-translation-database"
-  let this = state(state-name)
-  let val = val.pos().at(0, default: none)
+  assert.ne(data, (:), message: "Set #transl(data) option before use")
   
-  // USAGE: utils.cfg(add: <string>, <any>)
-  if add != none {
-    this.update(curr => {
-      if curr == none {curr = (:)}
-      let val = val
-      
-      if type(val) == dictionary {
-        if curr.at("add", default: none) == none {curr.insert(add, (:))}
+  let std = data.at("std", default: (:))
+  let ftl = data.at("ftl", default: (:))
+  
+  // Return back expression (no translation needed)
+  if from == to {return expr}
+  
+  
+  if has.key(std.at(to, default: (:)), expr) {
+    // Retrieve expr in standard database
+    std
+      .at(to, default: (:))
+      .at(expr)
+      .replace(regex("(?s)\{\{(.*?)\}\}"), m => {
+        // Simple {{arg}} substitution
+        let key = m.captures.at(0).trim().replace("$", "")
         
-        for key in val.keys() {
-          curr.at(add).insert(key, val.at(key))
-        }
-      }
-      else {curr.insert(str(add), val)}
-      
-      curr
-    })
+        if has.key(args, key) {args.at(key)} else {m.text}
+      })
   }
-  else if get != none {
-    return this.get().at(str(get), default: val)
-  }
-  // USAGE: context utils.cfg()
   else {
-    return this
-  }
-}
-
-
-// UTIL: Manages Fluid L10n data (see USAGE)
-#let fluent-data(
-  get: none,
-  lang: none,
-  data: none,
-  args: (:)
-) = {
-  // USAGE: utils.fluid-data(get: <string|array>, args: [string], [any])
-  if get != none {
-    let ftl = plugin("./linguify_fluent_rs.wasm")
-    let source = data.at(lang)
-    let config = cbor.encode((source: source, msg-id: get, args: args))
+    // Checks if expr is a regex with matches in std.at(to)
+    let key = std
+      .at(to, default: (:))
+      .keys()
+      .find( key => key.contains(regex("(?i)" + expr)) )
     
-    cbor(ftl.get_message(config))
+    if key != none {
+      return std
+        .at(to, default: (:))
+        .at(key)
+        .replace(regex("(?s)\{\{(.*?)\}\}"), m => {
+          // Simple {{arg}} substitution
+          let key = m.captures.at(0).trim().replace("$", "")
+          
+          if has.key(args, key) {args.at(key)} else {m.text}
+        })
+    }
+    
+    assert.ne(
+      ftl, (:),
+      message: "'" + expr + "' not found for '" + to + "' (no Fluent database)"
+    )
+    assert.ne(
+      ftl.at(to, default: (:)), (:),
+      message: "'" + expr + "' not found for '" + to + "' (no Fluent file loaded)"
+    )
+    
+    // Retrieve expr in Fluent database
+    let result = fluent(expr, to, ftl, args: args)
+    
+    if result != none {result}
+    else {panic("'" + expr + "' not found for '" + to + "'")}
   }
-  else {panic("Missing #fluent-data(get) argument")}
-}
-
-
-// DEBUG: Get the translation database at this point
-#let show-db(..mode) = {
-  import "utils.typ": db
-  
-  let data = if mode.pos() != () {db().final()} else {db().get()}
-  
-  set page(height: auto)
-  raw(
-    lang: "yaml",
-    yaml.encode(data)
-  )
 }
