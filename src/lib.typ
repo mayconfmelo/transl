@@ -128,15 +128,7 @@ from this great package.
         
         // Apply show rule to substitute each pattern for its translation
         body = {
-          show re: it => {
-            let text = it.text
-            let first = text.first()
-            
-            if first == lower(first) {utils.first-lower(translated)}
-            else if text == upper(text) {upper(translated)}
-            else if first == upper(first) {utils.first-upper(translated)}
-            else {translated}
-          }
+          show re: it => utils.set-case(translated, it.text)
           body
         }
       }

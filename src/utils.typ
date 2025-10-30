@@ -1,3 +1,14 @@
+// Set text case of result based on expr
+#let set-case(result, expr) = {
+  let first = expr.first()
+  
+  if first == lower(first) {lower(result.first()) + result.slice(1)}
+  else if expr == upper(expr) {upper(result)}
+  else if first == upper(first) {upper(result.first()) + result.slice(1)}
+  else {result}
+}
+
+
 // Retrieve Fluent data using wasm plugin
 #let fluent(get, lang, data, args: (:)) = {
   let wasm = plugin("./linguify_fluent_rs.wasm")
@@ -16,13 +27,14 @@
   
   let std = data.at("std", default: (:))
   let ftl = data.at("ftl", default: (:))
+  let result = none
   
   // Return back expression (no translation needed)
   if from == to {return expr}
   
   if has.key(std.at(to, default: (:)), expr) {
     // Retrieve expr in standard database
-    std
+    result = std
       .at(to, default: (:))
       .at(expr)
       .replace(regex("(?s)\{\{(.*?)\}\}"), m => {
@@ -31,6 +43,10 @@
         
         if has.key(args, key) {args.at(key)} else {m.text}
       })
+      
+    if not showing {result = set-case(result, expr)}
+    
+    return result
   }
   else {
     // Checks if expr is a regex with matches in std.at(to)
@@ -40,7 +56,7 @@
       .find( key => key.contains(regex("(?i)" + expr)) )
     
     if key != none {
-      return std
+      result = std
         .at(to, default: (:))
         .at(key)
         .replace(regex("(?s)\{\{(.*?)\}\}"), m => {
@@ -49,6 +65,10 @@
           
           if has.key(args, key) {args.at(key)} else {m.text}
         })
+        
+      if not showing {result = set-case(result, expr)}
+      
+      return result
     }
     
     assert.ne(
@@ -61,16 +81,10 @@
     )
     
     // Retrieve expr in Fluent database
-    let result = fluent(expr, to, ftl, args: args)
+    result = fluent(expr, to, ftl, args: args)
     
-    if result != none {result}
-    else {panic("'" + expr + "' not found for '" + to + "'")}
+    if result == none {panic("'" + expr + "' not found for '" + to + "'")}
+    
+    return result
   }
 }
-
-
-// Return word with uppercased first letter (sentence-case)
-#let first-upper(word) = {upper(word.first()) + word.slice(1)}
-
-// Return word with lowercased first letter
-#let first-lower(word) = {lower(word.first()) + word.slice(1)}
