@@ -27,6 +27,7 @@
   
   let std = data.at("std", default: (:))
   let ftl = data.at("ftl", default: (:))
+  let placeable = regex("(?s)\{\s*\$([^\}].+?)\s*\}")
   let result = none
   
   // Return back expression (no translation needed)
@@ -37,7 +38,7 @@
     result = std
       .at(to, default: (:))
       .at(expr)
-      .replace(regex("(?s)\{\{(.*?)\}\}"), m => {
+      .replace(placeable, m => {
         // Simple {{arg}} substitution
         let key = m.captures.at(0).trim().replace("$", "")
         
@@ -59,9 +60,9 @@
       result = std
         .at(to, default: (:))
         .at(key)
-        .replace(regex("(?s)\{\{(.*?)\}\}"), m => {
+        .replace(placeable, m => {
           // Simple {{arg}} substitution
-          let key = m.captures.at(0).trim().replace("$", "")
+          let key = m.captures.at(0)
           
           if has.key(args, key) {args.at(key)} else {m.text}
         })
