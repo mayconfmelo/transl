@@ -34,7 +34,7 @@ Italian: #transl("love", to: "it"). // #transl(to) also set target language.
 // Translate an entire phrase.
 
 #set text(lang: "pt")
-#transl("i love you, my dear")!
+#transl("I love you, my dear")!
 
 
 === Text block
@@ -42,6 +42,15 @@ Italian: #transl("love", to: "it"). // #transl(to) also set target language.
 
 #set text(lang: "es")
 #transl("poem")
+
+
+=== Case detection
+// Get UPPERCASE, Sentence, or original translation based on expression
+Lower: #transl("love")
+
+Sentence: #transl("Love")
+
+Upper: #transl("LOVE")
 
 
 == Translating ocurrencies within text
@@ -59,12 +68,17 @@ has a different meaning of amiability or excitement.
 
 In this text the words hot, passionate, and passion were automatically translated.
 
+
 === Use identifier expression
 // Get translation from Fluent and #show rule pattern from standard database
 
 #show: transl.with("much", from: "en", to: "it")
 
-I love you so much!
+Lower: i love you so much!
+
+Upper: I LOVE YOU SO MUCH!
+
+Sentence: I love you so much!
 
 
 == Localize translations
@@ -84,13 +98,13 @@ I love you so much!
 === Using standard database
 // Substitute variables based on additional arguments
 
-#transl("longing", nick: "meu amor")...
+#transl("Longing", nick: "meu amor")...
 
 
 == Use regular expressions
 // Match expressions in database using regex
 
-#transl("you.{3} b.*?l", to: "it") // you're beautiful
+#transl("You.{3} b.*?l", to: "it") // you're beautiful
 
 
 == Values retrieved

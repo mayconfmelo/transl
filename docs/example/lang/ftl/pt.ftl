@@ -3,4 +3,4 @@ declaration = { $tense ->
    *[present] Eu te amo muito, {{ $nick }}!
     [future] Eu te amarei muito, {{ $nick }}!
 }
-passion = paixão
+passion = Paixão
