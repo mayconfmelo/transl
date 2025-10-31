@@ -81,6 +81,15 @@ from this great package.
       panic("Invalid database type: " + repr(type(data)))
     }
     
+    // Check language data types for standard and Fluent databases
+    let required = if l10n == "std" {dictionary} else {str}
+    for lang in data.keys() {
+      if type(data.at(lang)) != required {
+        let path = l10n + "." + lang
+        panic("Data for '" + path + "' should be " + repr(required))
+      }
+    }
+    
     if not showing and mode != str {
       storage.add(l10n, data, append: true, namespace: "transl")
     }
