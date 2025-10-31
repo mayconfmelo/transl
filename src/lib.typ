@@ -112,7 +112,7 @@ from this great package.
       let to = to
       
       if data == (:) {data = storage.get(namespace: "transl")}
-      if to == auto {to = text.lang}
+      if to == auto {to = text.lang + if text.region != none {"-" + text.region}}
       
       // Use all expressions available in database when no expression
       if expr == () {
@@ -149,7 +149,7 @@ from this great package.
     if mode == str {
       // Return context-dependent or plain strings
       if data == (:) {data = storage.get(namespace: "transl")}
-      if to == auto {to = text.lang}
+      if to == auto {to = text.lang + if text.region != none {"-" + text.region}}
       if expr == () {
         expr = data
           .at("std", default: (:))
@@ -169,7 +169,7 @@ from this great package.
         let to = to
         
         if data == (:) {data = storage.get(namespace: "transl")}
-        if to == auto {to = text.lang}
+        if to == auto {to = text.lang + if text.region != none {"-" + text.region}}
         if expr == () {
           expr = data
             .at("std", default: (:))
