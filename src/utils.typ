@@ -40,8 +40,8 @@
       .at(to, default: (:))
       .at(expr)
       .replace(placeable, m => {
-        // Simple {{arg}} substitution
-        let key = m.captures.at(0).trim().replace("$", "")
+        // Simple {$arg} substitution
+        let key = m.captures.at(0)
         
         if has.key(args, key) {args.at(key)} else {m.text}
       })
@@ -62,7 +62,7 @@
         .at(to, default: (:))
         .at(key)
         .replace(placeable, m => {
-          // Simple {{arg}} substitution
+          // Simple {$arg} substitution
           let key = m.captures.at(0)
           
           if has.key(args, key) {args.at(key)} else {m.text}

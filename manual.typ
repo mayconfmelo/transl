@@ -141,7 +141,7 @@ expression pattern in the standard database, under the same identifier but in
 
 Any arguments other than the default ones (see @options section) are treated as
 additional localization arguments, they select localization cases (Fluent only)
-and replace special `{{$arg}}` patterns in translated values retrieved.
+and replace special `{$arg}` patterns in translated values retrieved.
 
 #grid(columns: 2,
   pad(right: 3em)[
@@ -161,9 +161,9 @@ and replace special `{{$arg}}` patterns in translated values retrieved.
     
     ```ftl
     response = { $answer ->
-      [yes] I do know {{ $name }}
-      [no] I don't know {{ $name }}
-      [maybe] I don't remember any {{ $name }}
+      [yes] I do know { $name }
+      [no] I don't know { $name }
+      [maybe] I don't remember any { $name }
     }
     ```
   ],

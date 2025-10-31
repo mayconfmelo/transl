@@ -25,7 +25,7 @@ Spanish: #transl("love").
 
 // #transl(from) equal to target language; get the expression itself.
 #set text(lang: "fr")
-French: #transl("amour", from: "fr"). 
+French: #transl("amour", from: "fr").
 
 Italian: #transl("love", to: "it"). // #transl(to) also set target language.
 
