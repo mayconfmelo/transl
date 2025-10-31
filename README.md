@@ -14,6 +14,7 @@ Easy and simple translations with support for localization
 </p>
 
 [![Manual](https://img.shields.io/badge/Manual-%23353c44)](https://raw.githubusercontent.com/mayconfmelo/transl/refs/tags/0.2.0/docs/manual.pdf)
+[![Tips](https://img.shields.io/badge/Tips-%23353c44)](https://github.com/mayconfmelo/transl/discussions/categories/tips)
 [![Example PDF](https://img.shields.io/badge/Example-PDF-%23777?labelColor=%23353c44)](https://raw.githubusercontent.com/mayconfmelo/transl/refs/tags/0.2.0/docs/example.pdf)
 [![Example SRC](https://img.shields.io/badge/Example-SRC-%23777?labelColor=%23353c44)](https://github.com/mayconfmelo/transl/blob/0.2.0/docs/example/main.typ)
 [![Changelog](https://img.shields.io/badge/Changelog-%23353c44)](https://github.com/mayconfmelo/transl/blob/main/docs/changelog.md)
@@ -35,7 +36,7 @@ Easy and simple translations with support for localization
 #import "@preview/transl:0.2.0": transl
 #set text(lang: "es")
 
-#transl(data: yaml("lang.yaml"))
+#transl(data: yaml("database.yaml"))
 
 #transl("I love you")
 
@@ -64,7 +65,7 @@ where each one will be retrieved and concatenated (separated by space).
 - Support for `#show` rules
 - Regular expressions
 - Multiple ways to obtain values
-  - Retrieve opaque `context()` values
+  - Retrieve opaque `#context()` values
   - Retrieve context-dependent strings
   - Retrieve plain strings
 - Localization arguments
