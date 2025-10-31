@@ -22,11 +22,24 @@ French: #transl("amour", from: "fr").
 
 Italian: #transl("love", to: "it"). // #transl(to) also set target language.
 
+#line()
 
 #set text(lang: "pt")
 Phrase: #transl("i love you, my dear")!
 
+#line()
 
 // Translate from Fluent database
 #set text(lang: "es")
 Fluent: #transl("hot")
+
+#line()
+
+
+#set text(lang: "pt")
+
+Lower: #transl("love") // amor
+
+Sentence: #transl("Love") // Amor
+
+Upper: #transl("LOVE") // AMOR

@@ -3,7 +3,7 @@
 #transl(data: yaml("/docs/example/lang/std.yaml"))
 
 #set text(lang: "pt")
-#transl("l.{2}e") // love
+#transl("L.{2}e") // Love
 
 
 #show: doc => transl("i .{4}.*my.dear", doc) // i love you, my dear

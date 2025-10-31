@@ -7,11 +7,13 @@
 #set text(lang: "pt")
 
 
-#transl("declaration", nick: "meu bem", tense: "past")
+#transl("declaration", name: "meu bem", tense: "past")
 
-#transl("declaration", nick: "meu amor", tense: "present")
+#transl("declaration", name: "meu amor", tense: "present")
 
-#transl("declaration", nick: "minha vida", tense: "future")
+#transl("declaration", name: "minha vida", tense: "future")
 
-// From standard database (simple arguments)
-#transl("Longing", nick: "meu amor")...
+#line()
+
+// From standard database (basic support)
+#transl("Longing", name: "meu amor")...
