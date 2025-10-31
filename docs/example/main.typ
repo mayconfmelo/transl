@@ -88,11 +88,11 @@ Sentence: I love you so much!
 === Using Fluent
 // Use localization cases and substitute variables based on additional arguments
 
-#transl("declaration", nick: "meu bem", tense: "past")
+#transl("declaration", name: "meu bem", tense: "past")
 
-#transl("declaration", nick: "meu amor")
+#transl("declaration", name: "meu amor")
 
-#transl("declaration", nick: "minha vida", tense: "future")
+#transl("declaration", name: "minha vida", tense: "future")
 
 
 === Using standard database

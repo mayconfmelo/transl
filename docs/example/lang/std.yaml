@@ -1,6 +1,6 @@
 pt:
   love: amor
-  longing: Tenho tanta saudade de você, { $nick }
+  longing: Tenho tanta saudade de você, { $name }
   i love you, my dear: Eu te amo, meu bem
 
 es:

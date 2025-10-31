@@ -1,6 +1,6 @@
 declaration = { $tense ->
-    [past] Eu te amei muito, { $nick }!
-   *[present] Eu te amo muito, { $nick }!
-    [future] Eu te amarei muito, { $nick }!
+    [past] Eu te amei muito, { $name }!
+   *[present] Eu te amo demais, { $name }!
+    [future] Eu amarei você muito, { $name }!
 }
 passion = Paixão
