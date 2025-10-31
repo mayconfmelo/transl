@@ -56,17 +56,18 @@ Upper: #transl("LOVE")
 == Translating ocurrencies within text
 // #show rule automatically translates the all ocurrencies of given expressions
 
-#show: transl.with("hot", "passionate", "passion", to: "es")
+#show: transl.with("hot", "passionate", "passion")
 
 The Spanish word "hot" is quite interesting; it has the same meaning as in
 English: to be warm --- boiling, even ---, but hot has a kind of
-spicyness to it that cannot be well explained. Hispanic peoples are often called
-hot because of their passion --- in fact, a synonym for to possess passion is
-"passionate" (burning, fiery). Interestingly, in Portuguese there is no word
-similar to hot; the word "caloroso" is the literal translation (to be warm) but
+spicy undertone to it that cannot be easily explained. Hispanics are often called
+hot because of their "passion" --- in fact, a synonym for possessing passion is
+"passionate" (burning, fiery). Curiously, in Portuguese there isn't a word
+similar to "hot"; the word "caloroso" is the literal translation (to be warm) but
 has a different meaning of amiability or excitement.
 
-In this text the words hot, passionate, and passion were automatically translated.
+In this text the words "hot", "passionate", and "passion" have been automatically
+translated.
 
 
 === Use identifier expression
@@ -76,9 +77,9 @@ In this text the words hot, passionate, and passion were automatically translate
 
 Lower: i love you so much!
 
-Upper: I LOVE YOU SO MUCH!
-
 Sentence: I love you so much!
+
+Upper: I LOVE YOU SO MUCH!
 
 
 == Localize translations
@@ -98,7 +99,7 @@ Sentence: I love you so much!
 === Using standard database
 // Substitute variables based on additional arguments
 
-#transl("Longing", nick: "meu amor")...
+#transl("Longing", name: "meu amor")...
 
 
 == Use regular expressions
