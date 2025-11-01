@@ -31,8 +31,9 @@
 - Removed: `#fluent` command
 - Removed: `#std` command
 - Added: Fluent YAML database
-- Added: `{{$arg}}` patterns (localization arguments) for standard database
+- Added: `{$arg}` placeables in standard database
 - Added: `#transl(expression)` can be regular expression strings
-- Added: Use Fluent database in `#show` rules
+- Added: Fallback system for database searches (std, regex in std, ftl)
+- Added: Trick to use Fluent database in `#show` rules
   - Rule pattern from standard database
   - Translation string from Fluent database
