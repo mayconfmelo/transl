@@ -20,12 +20,14 @@ Easy and simple translations with support for localization
 [![Changelog](https://img.shields.io/badge/Changelog-%23353c44)](https://github.com/mayconfmelo/transl/blob/main/docs/changelog.md)
 [![Contribute](https://img.shields.io/badge/Contribute-%23353c44)](https://github.com/mayconfmelo/transl/blob/main/docs/contributing.md)
 
+
 <p class="hidden">
-
-[![Tests](https://github.com/mayconfmelo/transl/actions/workflows/tests.yml/badge.svg)](https://github.com/mayconfmelo/transl/actions/workflows/tests.yml)
-[![Build](https://github.com/mayconfmelo/transl/actions/workflows/build.yml/badge.svg)](https://github.com/mayconfmelo/transl/actions/workflows/build.yml)
-[![Spellcheck](https://github.com/mayconfmelo/transl/actions/workflows/spellcheck.yml/badge.svg)](https://github.com/mayconfmelo/transl/actions/workflows/spellcheck.yml)
-
+  <a href="https://github.com/mayconfmelo/transl/actions/workflows/tests.yml">
+    <img alt="Tests" src="https://github.com/mayconfmelo/transl/actions/workflows/tests.yml/badge.svg" /></a>
+  <a href="https://github.com/mayconfmelo/transl/actions/workflows/build.yml">
+    <img alt="Build" src="https://github.com/mayconfmelo/transl/actions/workflows/build.yml/badge.svg" /></a>
+  <a href="https://github.com/mayconfmelo/transl/actions/workflows/spellcheck.yml">
+    <img alt="Spellcheck" src="https://github.com/mayconfmelo/transl/actions/workflows/spellcheck.yml/badge.svg" /></a>
 </p>
 </div>
 
