@@ -11,9 +11,9 @@
 
 // Retrieve Fluent data using wasm plugin
 #let fluent(get, lang, data, args: (:)) = {
-  let wasm = plugin("./linguify_fluent_rs.wasm")
+  let wasm = plugin("./fluent-plugin.wasm")
   let source = data.at(lang)
-  let config = cbor.encode((source: source, msg-id: get, args: args))
+  let config = cbor.encode((source: source, msg-id: get, args: args, lang: lang))
   
   cbor(wasm.get_message(config))
 }

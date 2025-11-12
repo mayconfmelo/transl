@@ -57,6 +57,11 @@ spell correct="no":
     --skip "*.pdf,./dev/*,.git/*,./docs/example/lang/*" \
     --ignore-words-list "meu"
 
+# build Fluent plugin.
+wasm:
+	cargo build --release --target wasm32-unknown-unknown
+	cp target/wasm32-unknown-unknown/release/fluent.wasm src/
+
 # useful dev commands.
 [private]
 dev:
