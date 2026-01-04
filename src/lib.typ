@@ -1,4 +1,4 @@
-/** #v(1fr)#outline()#v(1.2fr)#pagebreak()
+/** #v(1fr) #outline() #v(1.2fr) #pagebreak()
 = Quick Start
 
 ```typ

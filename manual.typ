@@ -1,5 +1,3 @@
-// NAME: Manual for transl
-
 #import "@preview/min-manual:0.2.0": manual, arg, univ, url
 
 #show: manual.with(
