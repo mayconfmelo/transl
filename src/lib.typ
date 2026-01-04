@@ -1,5 +1,3 @@
-// NAME: Translator
-
 /** #v(1fr)#outline()#v(1.2fr)#pagebreak()
 = Quick Start
 
@@ -68,10 +66,10 @@ from this great package.
     }
     else if type(data) == str {
       // Individual Fluent file
-      let lang = args.at("lang", default: none)
+      let lang = args.at("lang", default: to)
       let new = (:)
       
-      assert.ne(lang, none, message: "#transl(lang) option also required")
+      assert.ne(lang, none, message: "Fluent requires #transl(lang|to) option")
       new.insert(lang, data)
       
       l10n = "ftl"
