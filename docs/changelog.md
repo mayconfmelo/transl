@@ -33,7 +33,10 @@
 - Added: Fluent YAML database
 - Added: `{$arg}` placeables in standard database
 - Added: `#transl(expression)` can be regular expression strings
-- Added: Fallback system for database searches (std, regex in std, ftl)
+- Added: Database fallback system
+  1. Searches expression in standard database
+  2. Searches expression as regex in standard database
+  3. Searches expression as identifier in Fluent database
 - Added: Trick to use Fluent database in `#show` rules
   - Rule pattern from standard database
   - Translation string from Fluent database

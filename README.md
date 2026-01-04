@@ -75,6 +75,51 @@ where each one will be retrieved and concatenated (separated by space).
   - Fluent databases
 
 
+## Translation databases
+The command must be fed a translation database to function correctly. The command
+needs to be fed with a translation database to function correctly. These can be
+written in YAML and/or Fluent.
+
+
+#### Standard databases
+```yaml
+l10n: std
+lang:
+  expression: Translation
+```
+
+Allows to define translations for expressions in various languages. Set as:
+```typst
+#transl(data: yaml("std.yaml"))
+```
+
+
+#### Fluent databases
+```yaml
+l10n: ftl
+lang: |
+  identifier = Translation
+```
+
+Allows to define multiple Fluent files (strings) with translations for various languages.
+Set as:
+```typst
+#transl(data: yaml("ftl.yaml"))
+```
+
+
+#### Fluent files
+```fluent
+identifier = Translation
+```
+
+Allows to define an individual Fluent files with translations for a single language.
+Set as:
+```typst
+#transl(data: read("xyz.ftl"), lang: "xyz")
+```
+
+
 ---------------
 
 Although written from scratch, the package's conceptual structure is heavily
