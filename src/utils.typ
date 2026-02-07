@@ -21,7 +21,7 @@
 
 // Retrieve translation
 #let translate(expr, from, to, data, args, showing) = {
-  import "@preview/toolbox:0.1.0": storage, has
+  import "@preview/nexus-tools:0.1.0": storage, has
   
   assert.ne(data, (:), message: "Set #transl(data) option before use")
   assert.eq(type(expr), str, message: "#transl(" + repr(expr) + ") isn't string")

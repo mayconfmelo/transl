@@ -44,7 +44,7 @@ from this great package.
     /// Expressions to be translated (pos) and localization arguments (named). |
 ) = {
   import "utils.typ"
-  import "@preview/toolbox:0.1.0": storage, has, its
+  import "@preview/nexus-tools:0.1.0": storage, has, its
   
   let args = expr.named()
   let expr = expr.pos()
