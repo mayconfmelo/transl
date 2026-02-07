@@ -76,9 +76,8 @@ where each one will be retrieved and concatenated (separated by space).
 
 
 ## Translation databases
-The command must be fed a translation database to function correctly. The command
-needs to be fed with a translation database to function correctly. These can be
-written in YAML and/or Fluent.
+The command needs to be fed with translation database files to function correctly.
+These databases can be written in YAML and/or Fluent each.
 
 
 #### Standard databases
@@ -101,8 +100,8 @@ lang: |
   identifier = Translation
 ```
 
-Allows to define multiple Fluent files (strings) with translations for various languages.
-Set as:
+Allows to define multiple Fluent files (YAML strings) with translations for
+various languages. Set as:
 ```typst
 #transl(data: yaml("ftl.yaml"))
 ```
@@ -113,7 +112,7 @@ Set as:
 identifier = Translation
 ```
 
-Allows to define an individual Fluent files with translations for a single language.
+Allows to define an individual Fluent file with translations for a single language.
 Set as:
 ```typst
 #transl(data: read("xyz.ftl"), lang: "xyz")
