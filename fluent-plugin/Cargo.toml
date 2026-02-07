@@ -1,0 +1,15 @@
+[package]
+name = "fluent-plugin"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+ciborium = "0.2.2"
+fluent = "0.17.0"
+fluent-syntax = "0.12.0"
+serde = { version = "1.0.213", features = ["derive"] }
+unic-langid = "0.9"
+wasm-minimal-protocol = "0.1.0"

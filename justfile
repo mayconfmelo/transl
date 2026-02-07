@@ -58,9 +58,11 @@ spell correct="no":
     --ignore-words-list "meu"
 
 # build Fluent plugin.
-wasm:
+wasm path="src/":
+	#!/usr/bin/env bash
+	cd fluent-plugin/
 	cargo build --release --target wasm32-unknown-unknown
-	cp target/wasm32-unknown-unknown/release/fluent.wasm src/
+	[ $? == 0 ] && cp target/wasm32-unknown-unknown/release/fluent.wasm "{{path}}"
 
 # useful dev commands.
 [private]
