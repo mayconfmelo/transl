@@ -61,7 +61,7 @@ where each one will be retrieved and concatenated (separated by space).
 ## Feature List
 
 - Automatic translation to `#text.lang` language
-- Suport for `#text.region`
+- Support for `#text.region`
 - Language id notation (lang-REGION)
 - Robust translation formats
   - YAML/TOML (multilingual)

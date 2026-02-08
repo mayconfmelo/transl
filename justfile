@@ -55,7 +55,7 @@ spell correct="no":
   fi
   codespell $arg \
     --skip "*.pdf,./dev/*,.git/*,./docs/example/lang/*" \
-    --ignore-words-list "meu"
+    --ignore-words-list "meu,ser"
 
 # build Fluent plugin.
 wasm path="src/":
