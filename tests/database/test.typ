@@ -4,13 +4,13 @@
 #set page(width: auto, height: auto, margin: 1em)
 
 
-// Set standard YAML database
+// Set Standard database (YAML)
 #transl(data: yaml("/docs/example/lang/std.yaml"))
 
-// Set Fluent YAML database (with l10n: ftl)
+// Set Fluent database (YAML)
 #transl(data: yaml("/docs/example/lang/ftl.yaml"))
 
-// Include Fluent files for individual languages in database
+// Include Fluent files (single language) in database
 #transl(data: read("/docs/example/lang/ftl/pt.ftl"), lang: "pt")
 
 

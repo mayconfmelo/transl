@@ -20,8 +20,7 @@
 
 ### 0.1.1
 
-- Fixed: `#transl(data, mode: str)` used to return `content` because of a state update
-  - `#transl(data)` state update not done anymore when `#transl(mode: str)`
+- Fixed: `#transl(data: database, mode: str)` returning `content` (database update not done anymore)
 - Updated: Fluent arguments `#transl(args: (foo: bar))` &rarr; `#transl(foo: bar)`
 
 
@@ -31,12 +30,13 @@
 - Removed: `#fluent` command
 - Removed: `#std` command
 - Added: Fluent YAML database
-- Added: `{$arg}` placeables in standard database
+- Added: Support for `{$arg}` placeables in standard database values
 - Added: `#transl(expression)` can be regular expression strings
 - Added: Database fallback system
   1. Searches expression in standard database
   2. Searches expression as regex in standard database
   3. Searches expression as identifier in Fluent database
+  4. Panics
 - Added: Trick to use Fluent database in `#show` rules
-  - Rule pattern from standard database
-  - Translation string from Fluent database
+  - Get show rule pattern from standard database
+  - Get translation string from Fluent database

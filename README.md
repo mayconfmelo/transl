@@ -15,8 +15,8 @@ Easy and simple translations with support for localization
 
 [![Manual](https://img.shields.io/badge/Manual-%23353c44)](https://raw.githubusercontent.com/mayconfmelo/transl/refs/tags/0.2.0/docs/manual.pdf)
 [![Tips](https://img.shields.io/badge/Tips-%23353c44)](https://github.com/mayconfmelo/transl/discussions/categories/tips)
-[![Example PDF](https://img.shields.io/badge/Example-PDF-%23777?labelColor=%23353c44)](https://raw.githubusercontent.com/mayconfmelo/transl/refs/tags/0.2.0/docs/example.pdf)
-[![Example SRC](https://img.shields.io/badge/Example-SRC-%23777?labelColor=%23353c44)](https://github.com/mayconfmelo/transl/blob/0.2.0/docs/example/main.typ)
+[![Example PDF](https://img.shields.io/badge/Example-.pdf-%23777?labelColor=%23353c44)](https://raw.githubusercontent.com/mayconfmelo/transl/refs/tags/0.2.0/docs/example.pdf)
+[![Example SRC](https://img.shields.io/badge/Example-.typ-%23777?labelColor=%23353c44)](https://github.com/mayconfmelo/transl/blob/0.2.0/docs/example/main.typ)
 [![Changelog](https://img.shields.io/badge/Changelog-%23353c44)](https://github.com/mayconfmelo/transl/blob/main/docs/changelog.md)
 [![Contribute](https://img.shields.io/badge/Contribute-%23353c44)](https://github.com/mayconfmelo/transl/blob/main/docs/contributing.md)
 
@@ -61,9 +61,10 @@ where each one will be retrieved and concatenated (separated by space).
 ## Feature List
 
 - Automatic translation to `#text.lang` language
-- Robust translation database
-  - Standard (simple dictionary)
-  - Fluent files
+- Robust translation formats
+  - YAML/TOML (multilingual)
+  - Fluent markup (single language)
+  - YAML/TOML + Fluent (multilingual)
 - Support for `#show` rules
 - Regular expressions
 - Multiple ways to obtain values
@@ -77,7 +78,7 @@ where each one will be retrieved and concatenated (separated by space).
 
 ## Translation databases
 The command needs to be fed with translation database files to function correctly.
-These databases can be written in YAML and/or Fluent each.
+These databases can be written in YAML/TOML and/or Fluent each.
 
 
 #### Standard databases
@@ -100,7 +101,7 @@ lang: |
   identifier = Translation
 ```
 
-Allows to define multiple Fluent files (YAML strings) with translations for
+Allows to define multiple Fluent files (as strings) with translations for
 various languages. Set as:
 ```typst
 #transl(data: yaml("ftl.yaml"))
@@ -115,12 +116,12 @@ identifier = Translation
 Allows to define an individual Fluent file with translations for a single language.
 Set as:
 ```typst
-#transl(data: read("xyz.ftl"), lang: "xyz")
+#transl(data: read("xy.ftl"), lang: "xy")
 ```
 
 
 ---------------
 
-Although written from scratch, the package's conceptual structure is heavily
-inpired by the [linguify](https://www.typst.app/universe/package/linguify)
-package; the Fluent WASM plugin was also borrowed from this great package.
+Although written from scratch, the conceptual structure of the package is
+heavily inspired by the [linguify](https://www.typst.app/universe/package/linguify)
+package; the Fluent WASM plugin was derived from this excellent package.

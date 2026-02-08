@@ -5,47 +5,47 @@
 
 
 = Translator Example
-This file is compiled from `docs/example/main.typ` file, check it also.
 
 
 // Setting databases
-#transl(data: yaml("lang/std.yaml")) // standard database
+#transl(data: yaml("lang/std.yaml")) // Standard database
 #transl(data: yaml("lang/ftl.yaml")) // Fluent database
-#transl(data: read("lang/ftl/pt.ftl"), lang: "pt") // individual Fluent file
+#transl(data: read("lang/pt-BR.ftl"), lang: "pt-BR") // individual Fluent file
 
 
 == Retrieve translation
-// Search translation database for expression "love" in target language.
+// Search translation database for the expression "love" from target language.
 
-#set text(lang: "pt")
+#set text(lang: "pt", region: "BR")
 Portuguese: #transl("love").
 
-#set text(lang: "es")
+#set text(lang: "es", region: none)
 Spanish: #transl("love").
 
-// #transl(from) equal to target language; get the expression itself.
+// #transl(from) equal to target language: get the expression itself.
 #set text(lang: "fr")
 French: #transl("amour", from: "fr").
 
 Italian: #transl("love", to: "it"). // #transl(to) also set target language.
 
 
-=== Phrase
-// Translate an entire phrase.
+=== Retrieve sentence
+// Translate an entire sentence.
 
-#set text(lang: "pt")
+#set text(lang: "pt", region: "BR")
 #transl("I love you, my dear")!
 
 
-=== Text block
-// Get a chunk of text using a identifier.
+=== Retrieve text block
+// Get a chunk of text.
 
-#set text(lang: "es")
+#set text(lang: "es", region: none)
 #transl("poem")
 
 
 === Case detection
-// Get UPPERCASE, Sentence, or original translation based on expression
+// Get UPPERCASE, Sentence, or original translation based on the expression form
+
 Lower: #transl("love")
 
 Sentence: #transl("Love")
@@ -54,24 +54,18 @@ Upper: #transl("LOVE")
 
 
 == Translating ocurrencies within text
-// #show rule automatically translates the all ocurrencies of given expressions
+// #show rule automatically translating all ocurrencies of given expressions
 
 #show: transl.with("hot", "passionate", "passion")
 
-The Spanish word "hot" is quite interesting; it has the same meaning as in
-English: to be warm --- boiling, even ---, but hot has a kind of
-spicy undertone to it that cannot be easily explained. Hispanics are often called
-hot because of their "passion" --- in fact, a synonym for possessing passion is
-"passionate" (burning, fiery). Curiously, in Portuguese there isn't a word
-similar to "hot"; the word "caloroso" is the literal translation (to be warm) but
-has a different meaning of amiability or excitement.
-
-In this text the words "hot", "passionate", and "passion" have been automatically
-translated.
+Latin peoples are culturally known as "hot" because, in general, they are
+naturally more friendly, passionate, festive, and sensual persons. Their overall
+stereotypes can be described by one word: passion --- passion for living and for
+loving.
 
 
-=== Use identifier expression
-// Get translation from Fluent and #show rule pattern from standard database
+=== Translate text excerpts with case detection
+// Get translation from Fluent database and #show pattern from standard database
 
 #show: transl.with("much", from: "en", to: "it")
 
@@ -83,11 +77,11 @@ Upper: I LOVE YOU SO MUCH!
 
 
 == Localize translations
-#set text(lang: "pt")
+#set text(lang: "pt", region: "BR")
 
 
 === Using Fluent
-// Use localization cases and substitute variables based on additional arguments
+// Substitute placeables and set localization cases and with additional arguments
 
 #transl("declaration", name: "meu bem", tense: "past")
 
@@ -97,7 +91,7 @@ Upper: I LOVE YOU SO MUCH!
 
 
 === Using standard database
-// Substitute variables based on additional arguments
+// Substitute placeables by additional arguments
 
 #transl("Longing", name: "meu amor")...
 
@@ -105,7 +99,7 @@ Upper: I LOVE YOU SO MUCH!
 == Use regular expressions
 // Match expressions in database using regex
 
-#transl("You.{3} b.*?l", to: "it") // you're beautiful
+#transl("You.{3} b.*?l", to: "it") // matches "you're beautiful" expression
 
 
 == Values retrieved
@@ -123,8 +117,9 @@ Upper: I LOVE YOU SO MUCH!
 #context {
   let string = transl("passion", mode: str)
   
+  string.slice(0,3)
   "-"
-  for letter in string [#{letter}-]
+  string.slice(3)
 }
 
 
@@ -133,7 +128,7 @@ Upper: I LOVE YOU SO MUCH!
 
 #let string = transl(
   "passion",
-  to: "pt",
-  data: read("lang/ftl/pt.ftl"), lang: "pt"
+  to: "pt-BR",
+  data: read("lang/pt-BR.ftl"), lang: "pt-BR"
 )
 #string.slice(0,3)-#string.slice(3)
