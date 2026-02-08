@@ -13,6 +13,7 @@ exclude = [
   "tests/",
   "docs/",
   "scripts/",
+  "fluent-plugin/",
   ".git",
   ".github",
   ".gitignore",
