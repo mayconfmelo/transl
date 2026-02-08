@@ -7,10 +7,11 @@
 #set text(lang: "es")
 
 
-#show: transl.with("hot", "passionate", "passion")
+#show: transl.with("passionate", "passion")
 
-In this text the words hot, passionate, and passion were automatically translated.
+You are passionate because you live with so much passion!
 
+#line()
 
 // Show rule pattern from data.std.en.much
 // Translation from data.ftl.it.much

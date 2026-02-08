@@ -2,7 +2,7 @@
 #set page(width: auto, height: auto, margin: 1em)
 #transl(data: yaml("/docs/example/lang/std.yaml"))
 
-#set text(lang: "pt")
+#set text(lang: "pt", region: "BR")
 #transl("L.{2}e") // Love
 
 

@@ -2,9 +2,9 @@
 #set page(height: auto, width: auto, margin: 1em)
 
 #transl(data: yaml("/docs/example/lang/std.yaml"))
-#transl(data: read("/docs/example/lang/ftl/pt.ftl"), lang: "pt")
+#transl(data: read("/docs/example/lang/pt-BR.ftl"), lang: "pt-BR")
 
-#set text(lang: "pt")
+#set text(lang: "pt", region: "BR")
 
 
 #transl("declaration", name: "meu bem", tense: "past")

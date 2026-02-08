@@ -11,7 +11,7 @@
 #transl(data: yaml("/docs/example/lang/ftl.yaml"))
 
 // Include Fluent files (single language) in database
-#transl(data: read("/docs/example/lang/ftl/pt.ftl"), lang: "pt")
+#transl(data: read("/docs/example/lang/pt-BR.ftl"), lang: "pt-BR")
 
 
 // Show the final database, visualized as YAML

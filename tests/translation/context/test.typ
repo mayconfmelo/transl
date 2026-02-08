@@ -1,8 +1,8 @@
 #import "/src/lib.typ": transl
 #set page(height: auto, width: auto, margin: 1em)
-#transl(data: read("/docs/example/lang/ftl/pt.ftl"), lang: "pt")
+#transl(data: read("/docs/example/lang/pt-BR.ftl"), lang: "pt-BR")
 
-#set text(lang: "pt")
+#set text(lang: "pt", region: "br")
 
 
 // Retrieve an opaque context()
@@ -21,7 +21,7 @@ Contextualized:
 Plain: 
 #let string = transl(
   "passion",
-  to: "pt",
-  data: read("/docs/example/lang/ftl/pt.ftl"), lang: "pt"
+  to: "pt-BR",
+  data: read("/docs/example/lang/pt-BR.ftl"), lang: "pt-BR"
 )
 #string.slice(0,3)-#string.slice(3)
