@@ -32,6 +32,8 @@
 - Added: Fluent YAML database
 - Added: Support for `{$arg}` placeables in standard database values
 - Added: `#transl(expression)` can be regular expression strings
+- Added: Translation text case set by expression
+- Added: Support for language regions (`xy-XY`)
 - Added: Database fallback system
   1. Searches expression in standard database
   2. Searches expression as regex in standard database

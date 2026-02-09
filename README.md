@@ -126,4 +126,4 @@ Set as:
 
 Although written from scratch, the conceptual structure of the package is
 heavily inspired by the [linguify](https://www.typst.app/universe/package/linguify)
-package; the Fluent WASM plugin was derived from this excellent package.
+package; the Fluent WASM plugin was forked from this excellent package.
