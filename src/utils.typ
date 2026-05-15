@@ -1,10 +1,16 @@
+// Apply transform to the first character of s, preserving the rest.
+// Uses s.first().len() so the slice index lands on a character boundary
+// even when the first character is multi-byte (e.g. "í", "é", "ñ").
+#let _head-tail(s, transform) = transform(s.first()) + s.slice(s.first().len())
+
+
 // Set text case of result based on expr
 #let set-case(result, expr) = {
   let first = expr.first()
-  
-  if first == lower(first) {lower(result.first()) + result.slice(1)}
+
+  if first == lower(first) {_head-tail(result, lower)}
   else if expr == upper(expr) {upper(result)}
-  else if first == upper(first) {upper(result.first()) + result.slice(1)}
+  else if first == upper(first) {_head-tail(result, upper)}
   else {result}
 }
 
