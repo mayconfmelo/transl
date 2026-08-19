@@ -14,14 +14,14 @@
 
 #set text(lang: "es")
 
-Lower: #transl("contents")  // índice
-Sentence: #transl("Contents") // Índice
+Lower: #transl("contents")\  // índice
+Sentence: #transl("Contents")\ // Índice
 Upper: #transl("CONTENTS") // ÍNDICE
 
-Lower: #transl("summary") // épilogo
-Sentence: #transl("Summary") // Épilogo
+Lower: #transl("summary")\ // épilogo
+Sentence: #transl("Summary")\ // Épilogo
 Upper: #transl("SUMMARY") // ÉPILOGO
 
-Lower: #transl("appendix") // ñame
-Sentence: #transl("Appendix") // Ñame
+Lower: #transl("appendix")\ // ñame
+Sentence: #transl("Appendix")\ // Ñame
 Upper: #transl("APPENDIX") // ÑAME
