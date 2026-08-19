@@ -42,3 +42,9 @@
 - Added: Trick to use Fluent database in `#show` rules
   - Get show rule pattern from standard database
   - Get translation string from Fluent database
+
+
+### 0.2.1
+
+- Internal re-design of Fluent WASM plugin
+- Fixed: panic when obtained translated text starts with multi-byte character ("é", "í", "ñ", etc.)
