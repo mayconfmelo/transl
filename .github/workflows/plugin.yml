@@ -1,0 +1,48 @@
+name: WASM Plugin
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
+    branches: [ main, dev ]
+    
+jobs:
+  plugin:
+    name: Build WASM typst plugin
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup just
+        uses: extractions/setup-just@v4
+      - name: Install rust toolchain (cargo)
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: wasm32-unknown-unknown
+          override: true
+      - name: Build plugin
+        run: just plugin
+      - name: Check for changes
+        id: git-status
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Commit and push new plugin build
+        if: steps.git-status.outputs.changed == 'true'
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          
+          git add .
+          git commit -m "github-actions[bot]: added new plugin build"
+          git push
