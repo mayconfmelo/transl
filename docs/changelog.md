@@ -45,3 +45,5 @@
 
 
 ### 0.2.1
+
+- Internal re-design of Fluent WASM plugin

@@ -5,7 +5,7 @@
 #cbor(
   wasm.get_message(
     cbor.encode((
-      source: read("db.yaml"),
+      source: read("database.ftl"),
       msg-id: "identifier",
       args: (foo: 1, bar: 2),
       lang: "pt-BR",
@@ -14,8 +14,11 @@
 )
 ```
 
-This is a Typst plugin written in Rust and compiled to WebAssembly.
-It allows `#transl` to interpret and retrieve [Fluent](https://projectfluent.org/) data.
+A Typst plugin written in Rust and compiled to WebAssembly that
+allows `#transl` to interpret and retrieve [Fluent](https://projectfluent.org/) data.
+
+This plugin was forked from [linguify](https://github.com/typst-community/linguify/tree/main/linguify_fluent_rs) project.
+
 
 ## Build
 

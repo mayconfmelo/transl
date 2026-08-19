@@ -28,6 +28,8 @@ Easy and simple translations with support for localization
     <img alt="Build" src="https://github.com/mayconfmelo/transl/actions/workflows/build.yml/badge.svg" /></a>
   <a href="https://github.com/mayconfmelo/transl/actions/workflows/spellcheck.yml">
     <img alt="Spellcheck" src="https://github.com/mayconfmelo/transl/actions/workflows/spellcheck.yml/badge.svg" /></a>
+  <a href="https://github.com/mayconfmelo/transl/actions/workflows/plugin.yml">
+    <img alt="Spellcheck" src="https://github.com/mayconfmelo/transl/actions/workflows/plugin.yml/badge.svg" /></a>
 </p>
 </div>
 
