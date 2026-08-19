@@ -47,3 +47,4 @@
 ### 0.2.1
 
 - Internal re-design of Fluent WASM plugin
+- Fixed [#11](https://github.com/mayconfmelo/transl/issues/11): panic when obtained translated text starts with multi-byte character ("é", "í", "ñ", etc.)
