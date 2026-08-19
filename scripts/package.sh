@@ -90,7 +90,7 @@ case "${ACTION}" in
   "install")
     echo "Installing \"${NAME}:${VERSION}\" package"
     mkdir -p "${LIB_DIR}" 2>/dev/null
-    rm -r "${LIB_DIR}/${VERSION}" 2>/dev/null
+    rm -rf "${LIB_DIR}/${VERSION}" 2>/dev/null
     # Copy all package files to its path:
     cp -r "${PROJECT_ROOT}" "${LIB_DIR}/${VERSION}"
     if [[ $? == 0 ]]; then
@@ -121,7 +121,7 @@ case "${ACTION}" in
 
       for EXCLUDE in ${EXCLUDES[@]}; do
         if [[ -e "${EXCLUDE}" ]]; then
-          rm -r "${EXCLUDE}"
+          rm -rf "${EXCLUDE}"
           echo " - Removed: ${EXCLUDE}"
         else
           echo " - Does not exist: ${EXCLUDE}"
