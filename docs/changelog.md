@@ -42,3 +42,6 @@
 - Added: Trick to use Fluent database in `#show` rules
   - Get show rule pattern from standard database
   - Get translation string from Fluent database
+
+
+### 0.2.1

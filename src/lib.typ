@@ -2,7 +2,7 @@
 = Quick Start
 
 ```typ
-#import "@preview/transl:0.2.0": transl
+#import "@preview/transl:0.2.1": transl
 #set text(lang: "es")
 
 #transl(data: yaml("lang.yaml"))

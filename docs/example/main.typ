@@ -1,4 +1,4 @@
-#import "@preview/transl:0.2.0": transl
+#import "@preview/transl:0.2.1": transl
 
 #set page(height: auto)
 #set text(font: "Arial", size: 12pt)
