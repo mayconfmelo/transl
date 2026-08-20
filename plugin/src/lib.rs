@@ -33,15 +33,15 @@ pub fn get_message(config: &[u8]) -> Result<Vec<u8>, String> {
             (k, v)
         })
         .collect();
-        
+
     let lang_id: LanguageIdentifier = lang.parse().expect("Invalid language");
     let mut bundle = FluentBundle::new(vec![lang_id]);
-    let res = FluentResource::try_new(source)
-        .map_err(|_| "Failed to add FluentResource".to_string())?;
+    let res = FluentResource::try_new(source).map_err(|_| "Failed to add FluentResource".to_string())?;
 
     bundle
         .add_resource(res)
         .map_err(|_| "Failed to add FluentResource".to_string())?;
+    
     bundle
         .add_builtins()
         .expect("Failed to add builtins to the bundle.");
@@ -59,5 +59,6 @@ pub fn get_message(config: &[u8]) -> Result<Vec<u8>, String> {
         .transpose()?;
 
     let output = cbor_encode(&value).map_err_to_string()?;
+    
     Ok(output)
 }

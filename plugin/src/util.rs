@@ -3,7 +3,9 @@ where
     T: serde::Serialize + ?Sized,
 {
     let mut writer = Vec::new();
+    
     ciborium::into_writer(value, &mut writer)?;
+    
     Ok(writer)
 }
 
